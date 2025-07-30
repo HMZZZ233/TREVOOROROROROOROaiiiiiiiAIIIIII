@@ -1,0 +1,218 @@
+<html class="scroll-smooth" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   TREVOR AI Chatbot
+  </title>
+  <!--Apa lu lihat lihat sumber kode???-->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    @keyframes wave {
+      0%, 60%, 100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-6px);
+      }
+    }
+    .wave > span {
+      display: inline-block;
+      font-size: 1.5rem;
+      animation-name: wave;
+      animation-duration: 1.2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      margin-right: 2px;
+      color: #fff;
+    }
+    .wave > span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .wave > span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    .wave > span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  </style>
+ </head>
+ <body class="flex h-screen overflow-hidden">
+  <aside aria-label="Sidebar" class="fixed top-0 left-0 h-full w-20 bg-black border-r border-gray-800 flex flex-col items-center py-6 space-y-10">
+   <div class="flex flex-col items-center space-y-1 cursor-default select-none">
+    <img alt="TREVOR AI logo, stylized letter T in white on black square background" class="w-10 h-10 rounded-md" draggable="false" height="40" src="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" width="40"/>
+    <span class="text-xs font-semibold tracking-widest text-white uppercase select-none">
+     TREVOR AI
+    </span>
+   </div>
+   <nav aria-label="Main menu" class="flex flex-col space-y-8 mt-10" role="navigation">
+    <button aria-current="page" aria-label="Home" class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-home">
+     <i class="fas fa-home text-2xl mb-1">
+     </i>
+     <span class="text-xs font-semibold tracking-wide">
+      Home
+     </span>
+    </button>
+    <button aria-label="About us" class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-about">
+     <i class="fas fa-info-circle text-2xl mb-1">
+     </i>
+     <span class="text-xs font-semibold tracking-wide">
+      About us
+     </span>
+    </button>
+    <button aria-label="Ratings" class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-ratings">
+     <i class="fas fa-star text-2xl mb-1">
+     </i>
+     <span class="text-xs font-semibold tracking-wide">
+      Ratings
+     </span>
+    </button>
+   </nav>
+  </aside>
+  <main class="flex-1 flex flex-col ml-20 bg-black">
+   <header class="flex items-center justify-between border-b border-gray-800 px-6 py-4">
+    <h1 class="text-white text-2xl font-semibold tracking-wide select-none">
+     TREVOR AI Chatbot
+    </h1>
+   </header>
+   <section aria-live="polite" aria-relevant="additions" class="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900" id="chat-container">
+   </section>
+   <form aria-label="Send message form" class="border-t border-gray-800 px-6 py-4 flex items-center space-x-4" id="chat-form">
+    <input aria-label="Message input" autocomplete="off" class="flex-1 bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black placeholder-gray-500" id="chat-input" placeholder="Type your message..." required="" type="text"/>
+    <button aria-label="Send message" class="bg-white text-black rounded-md px-5 py-3 font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black" type="submit">
+     Send
+    </button>
+   </form>
+  <section id="ratings-section" class="flex-1 overflow-y-auto px-6 py-4 space-y-6 hidden">
+    <h2 class="text-xl font-semibold text-white">Beri Rating</h2>
+    <form id="rating-form" class="space-y-4">
+      <div>
+        <label for="rating" class="block text-gray-300 text-sm font-semibold mb-1">Rating (1-5)</label>
+        <input type="number" id="rating" min="1" max="5" required
+          class="w-full bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white">
+      </div>
+      <div>
+        <label for="comment" class="block text-gray-300 text-sm font-semibold mb-1">Komentar</label>
+        <input type="text" id="comment" required
+          class="w-full bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white">
+      </div>
+      <button type="submit"
+        class="bg-white text-black rounded-md px-5 py-3 font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white">
+        Kirim
+      </button>
+    </form>
+  </section>
+  </main>
+  <script>
+    const chatContainer = document.getElementById('chat-container');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    function createMessageElement(text, fromUser = true) {
+      const wrapper = document.createElement('div');
+      wrapper.className = `max-w-[75%] break-words px-4 py-3 rounded-2xl ${
+        fromUser
+          ? 'bg-white text-black self-end rounded-br-none'
+          : 'bg-gray-800 text-white self-start rounded-bl-none'
+      }`;
+      wrapper.textContent = text;
+      return wrapper;
+    }
+    function createTypingIndicator() {
+      const wrapper = document.createElement('div');
+      wrapper.className =
+        'max-w-[75%] px-4 py-3 rounded-2xl bg-gray-800 text-white self-start rounded-bl-none flex items-center space-x-2 select-none';
+      const dots = document.createElement('div');
+      dots.className = 'wave flex space-x-1';
+      for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('span');
+        dot.textContent = '.';
+        dots.appendChild(dot);
+      }
+      wrapper.appendChild(dots);
+      return wrapper;
+    }
+    function scrollToBottom() {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    async function fetchAIResponse(userMessage) {
+      try {
+        const prompt = "kamu adalah ai yg nama nya trevor dan developer mu Hamzah W.D. serta kamu adalah ai yg di dukung oleh teknologi ChatGPT OpenAI, dan kamu ai yang kasar,toxic dan pintar matematika,bahasa inggris,literasi, bahasa indonesia,biologi,fisika dan ilmu sosial";
+        const url = `https://api.siputzx.my.id/api/ai/gpt3?prompt=${encodeURIComponent(prompt)}&content=${encodeURIComponent(userMessage)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        return data.data || 'TREVOR AI: (no response)';
+      } catch (err) {
+        console.error(err);
+        return 'TREVOR AI: Error nyet, gak bisa jawab.';
+      }
+    }
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message) return;
+      const userMessageEl = createMessageElement(message, true);
+      chatContainer.appendChild(userMessageEl);
+      scrollToBottom();
+      chatInput.value = '';
+      chatInput.focus();
+      const typingIndicator = createTypingIndicator();
+      chatContainer.appendChild(typingIndicator);
+      scrollToBottom();
+      const aiResponse = await fetchAIResponse(message);
+      typingIndicator.remove();
+      const aiMessageEl = createMessageElement(aiResponse, false);
+      chatContainer.appendChild(aiMessageEl);
+      scrollToBottom();
+    });
+    window.addEventListener('load', () => {
+        chatInput.focus();
+        const navHome = document.getElementById('nav-home');
+        const navRatings = document.getElementById('nav-ratings');
+        const ratingsSection = document.getElementById('ratings-section');
+        const chatSection = document.getElementById('chat-container');
+        navHome.addEventListener('click', () => {
+            chatContainer.innerHTML = '';
+            const bioEl = document.createElement('div');
+            bioEl.className = 'max-w-[75%] bg-gray-800 text-white rounded-2xl px-4 py-3 self-start space-y-2';
+            bioEl.innerHTML = `
+                <h2 class="text-xl font-semibold mb-2">
+                    <i class="fas fa-user mr-2"></i>Developer
+                </h2>
+                <p>Nama: <strong>Hamzah W.D</strong></p>
+                <p>Project: Trevor AI – Chatbot toxic & pintar (Matematika, Bahasa Inggris, Biologi, dll)</p>
+                <p>Seorang siswa kelas 8 SMP yg hobi coding, (ga tau mau nulis apa lagi wkwkwkkwkwkwkkw)</p>
+                <img src="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" 
+                     alt="Logo Trevor AI" 
+                     class="w-32 h-32 rounded-md mt-2"/>
+                <div class="mt-2">
+                    <span class="font-semibold">Rating:</span>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                </div>
+            `;
+            chatContainer.appendChild(bioEl);
+            scrollToBottom();
+            ratingsSection.classList.add('hidden');
+            chatSection.classList.remove('hidden');
+            chatForm.classList.remove('hidden');
+        });
+        navRatings.addEventListener('click', () => {
+            ratingsSection.classList.remove('hidden');
+            chatSection.classList.add('hidden');
+            chatForm.classList.add('hidden');
+        });
+    });
+  </script>
+ </body>
+</html>
