@@ -2,6 +2,19 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https:/trevor-ai.vercel.app/" />
+  <meta property="og:title" content="TREVOR AI Chatbot" />
+  <meta property="og:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
+  <meta property="og:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://example.com/" /> <!-- Ganti juga -->
+  <meta name="twitter:title" content="TREVOR AI Chatbot" />
+  <meta name="twitter:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
+  <meta name="twitter:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
+  <!-- favicon (logo di tab browser) -->
+  <link rel="icon" href="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" type="image/png" />
   <title>
    TREVOR AI Chatbot
   </title>
@@ -112,6 +125,40 @@
   </section>
   </main>
   <script>
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('user-input');
+    const messages = document.getElementById('messages');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage(text, 'user');
+      input.value = '';
+      try {
+        const res = await fetch('http://localhost:5000/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+        const data = await res.json();
+        if (data.reply) {
+          addMessage(data.reply, 'trevor');
+        } else {
+          addMessage('❌ Error: ' + (data.error || 'No reply'), 'trevor');
+        }
+      } catch (err) {
+        console.error(err);
+        addMessage('❌ Network error', 'trevor');
+      }
+    });
+    function addMessage(text, who) {
+      const div = document.createElement('div');
+      div.className = 'message ' + who;
+      div.textContent = (who === 'user' ? 'You: ' : 'Trevor: ') + text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
     const chatContainer = document.getElementById('chat-container');
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
