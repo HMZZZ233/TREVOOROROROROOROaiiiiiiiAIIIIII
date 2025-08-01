@@ -177,22 +177,12 @@
   </section>
   </main>
   <script>
-    console.log('SpeechRecognition' in window, 'webkitSpeechRecognition' in window);
     const micBtn = document.getElementById('mic-btn');
     const micModal = document.getElementById('mic-modal');
     const closeMic = document.getElementById('close-mic');
     const micPermissionModal = document.getElementById('mic-permission-modal');
     const allowMicBtn = document.getElementById('allow-mic');
     const denyMicBtn = document.getElementById('deny-mic');
-    micBtn.addEventListener('click', () => {
-      if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-        alert('HP/BRWOSER LU GA SUPPORT');
-        micBtn.disabled = true;
-        micBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        return;
-      }
-      micPermissionModal.classList.remove('hidden');
-    });
     allowMicBtn.addEventListener('click', () => {
       micPermissionModal.classList.add('hidden');
       micModal.classList.remove('hidden');
