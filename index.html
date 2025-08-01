@@ -192,6 +192,10 @@
       micPermissionModal.classList.add('hidden');
     });
     micBtn.addEventListener('click', () => {
+      if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        alert('Browser lu gak support voice recognition. Coba pake laptop.');
+        return;
+      }
       micPermissionModal.classList.remove('hidden');
     });
     closeMic.addEventListener('click', () => {
