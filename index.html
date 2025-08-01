@@ -146,6 +146,16 @@
       <i class="fas fa-times"></i>
     </button>
    </div>
+    <div id="mic-permission-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex flex-col items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-xl p-6 text-center space-y-4">
+            <h2 class="text-xl font-semibold text-white">Izinkan Mikrofon?</h2>
+            <p class="text-gray-300">Trevor AI perlu akses mikrofon untuk mendengarkan suara kamu.</p>
+            <div class="flex space-x-4 justify-center">
+                <button id="allow-mic" class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-400">Allow</button>
+                <button id="deny-mic" class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-400">Deny</button>
+            </div>
+        </div>
+    </div>
   <section id="ratings-section" class="flex-1 overflow-y-auto px-6 py-4 space-y-6 hidden">
     <h2 class="text-xl font-semibold text-white">Beri Rating</h2>
     <form id="rating-form" class="space-y-4">
@@ -170,9 +180,19 @@
     const micBtn = document.getElementById('mic-btn');
     const micModal = document.getElementById('mic-modal');
     const closeMic = document.getElementById('close-mic');
-    micBtn.addEventListener('click', () => {
+    const micPermissionModal = document.getElementById('mic-permission-modal');
+    const allowMicBtn = document.getElementById('allow-mic');
+    const denyMicBtn = document.getElementById('deny-mic');
+    allowMicBtn.addEventListener('click', () => {
+      micPermissionModal.classList.add('hidden');
       micModal.classList.remove('hidden');
       startListening();
+    });
+    denyMicBtn.addEventListener('click', () => {
+      micPermissionModal.classList.add('hidden');
+    });
+    micBtn.addEventListener('click', () => {
+      micPermissionModal.classList.remove('hidden');
     });
     closeMic.addEventListener('click', () => {
       micModal.classList.add('hidden');
