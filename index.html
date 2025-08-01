@@ -7,13 +7,11 @@
   <meta property="og:title" content="TREVOR AI Chatbot" />
   <meta property="og:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
   <meta property="og:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://example.com/" /> <!-- Ganti juga -->
   <meta name="twitter:title" content="TREVOR AI Chatbot" />
   <meta name="twitter:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
   <meta name="twitter:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-  <!-- favicon (logo di tab browser) -->
   <link rel="icon" href="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" type="image/png" />
   <title>
    TREVOR AI Chatbot
@@ -56,10 +54,36 @@
     .wave > span:nth-child(3) {
       animation-delay: 0.3s;
     }
+    .love-mode-bg {
+      background: linear-gradient(135deg, #ffffff, #d946d9, #ec4899, #3b82f6);
+      background-size: 400% 400%;
+      animation: gradientMove 8s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    main {
+      transition: background 0.5s ease;
+    }
+    @keyframes waveAnim {
+      0%, 100% { height: 0.5rem; }
+      50% { height: 2rem; }
+    }
+    .animate-wave {
+      animation: waveAnim 1s infinite ease-in-out;
+    }
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+    .sidebar-love {
+      background: linear-gradient(180deg, #a855f7, #f5f3ff);
+      border-color: #c084fc;
+    }
   </style>
  </head>
  <body class="flex h-screen overflow-hidden">
-  <aside aria-label="Sidebar" class="fixed top-0 left-0 h-full w-20 bg-black border-r border-gray-800 flex flex-col items-center py-6 space-y-10">
+  <aside class="fixed top-0 left-0 h-full w-20 sm:w-24 md:w-28 bg-black border-r border-gray-800 flex flex-col items-center py-6 space-y-10">
    <div class="flex flex-col items-center space-y-1 cursor-default select-none">
     <img alt="TREVOR AI logo, stylized letter T in white on black square background" class="w-10 h-10 rounded-md" draggable="false" height="40" src="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" width="40"/>
     <span class="text-xs font-semibold tracking-widest text-white uppercase select-none">
@@ -90,7 +114,7 @@
     </button>
    </nav>
   </aside>
-  <main class="flex-1 flex flex-col ml-20 bg-black">
+  <main class="flex-1 flex flex-col ml-20 sm:ml-24 md:ml-28 bg-black">
    <header class="flex items-center justify-between border-b border-gray-800 px-6 py-4">
     <h1 class="text-white text-2xl font-semibold tracking-wide select-none">
      TREVOR AI Chatbot
@@ -99,11 +123,29 @@
    <section aria-live="polite" aria-relevant="additions" class="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900" id="chat-container">
    </section>
    <form aria-label="Send message form" class="border-t border-gray-800 px-6 py-4 flex items-center space-x-4" id="chat-form">
-    <input aria-label="Message input" autocomplete="off" class="flex-1 bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black placeholder-gray-500" id="chat-input" placeholder="Type your message..." required="" type="text"/>
+    <button id="toggle-mode" type="button"
+     class="text-pink-500 hover:text-pink-300 focus:outline-none">
+      <i class="fas fa-heart text-2xl"></i>
+    </button>
+    <input aria-label="Message input" autocomplete="off" class="flex-1 bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black placeholder-gray-500" id="chat-input" placeholder="Type your message..." required type="text" />
     <button aria-label="Send message" class="bg-white text-black rounded-md px-5 py-3 font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black" type="submit">
      Send
     </button>
+    <button id="mic-btn" type="button" class="text-blue-500 hover:text-blue-300 focus:outline-none">
+      <i class="fas fa-microphone"></i>
+    </button>
    </form>
+   <div id="mic-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex flex-col items-center justify-center z-50 hidden">
+    <img src="https://uploads.onecompiler.io/43e3nkn3a/43cxu8ubd/Screenshot_2025-08-01_162917-removebg-preview.png" alt="Robot" class="w-32 h-32 mb-4">
+    <div id="wave" class="flex space-x-2 mb-4">
+      <div class="w-2 bg-blue-500 animate-wave"></div>
+      <div class="w-2 bg-blue-500 animate-wave animation-delay-200"></div>
+      <div class="w-2 bg-blue-500 animate-wave animation-delay-400"></div>
+    </div>
+    <button id="close-mic" class="mt-2 text-red-500 text-3xl">
+      <i class="fas fa-times"></i>
+    </button>
+   </div>
   <section id="ratings-section" class="flex-1 overflow-y-auto px-6 py-4 space-y-6 hidden">
     <h2 class="text-xl font-semibold text-white">Beri Rating</h2>
     <form id="rating-form" class="space-y-4">
@@ -125,52 +167,108 @@
   </section>
   </main>
   <script>
-    const form = document.getElementById('chat-form');
-    const input = document.getElementById('user-input');
-    const messages = document.getElementById('messages');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const text = input.value.trim();
-      if (!text) return;
-      addMessage(text, 'user');
-      input.value = '';
-      try {
-        const res = await fetch('http://localhost:5000/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text })
-        });
-        const data = await res.json();
-        if (data.reply) {
-          addMessage(data.reply, 'trevor');
-        } else {
-          addMessage('❌ Error: ' + (data.error || 'No reply'), 'trevor');
-        }
-      } catch (err) {
-        console.error(err);
-        addMessage('❌ Network error', 'trevor');
-      }
+    const micBtn = document.getElementById('mic-btn');
+    const micModal = document.getElementById('mic-modal');
+    const closeMic = document.getElementById('close-mic');
+    micBtn.addEventListener('click', () => {
+      micModal.classList.remove('hidden');
+      startListening();
     });
-    function addMessage(text, who) {
-      const div = document.createElement('div');
-      div.className = 'message ' + who;
-      div.textContent = (who === 'user' ? 'You: ' : 'Trevor: ') + text;
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
+    closeMic.addEventListener('click', () => {
+      micModal.classList.add('hidden');
+      stopListening();
+    });
+    let recognition;
+    function startListening() {
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'id-ID'; 
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.onresult = async (event) => {
+        const text = event.results[0][0].transcript;
+        console.log('You said:', text);
+        const userMessageEl = createMessageElement(text, true);
+        chatContainer.appendChild(userMessageEl);
+        scrollToBottom();
+        const aiResponse = await fetchAIResponse(text);
+        speakIndo(aiResponse);
+      };
+      recognition.onerror = (e) => console.error('Recognition error:', e);
+      recognition.start();
     }
+    function stopListening() {
+      if (recognition) recognition.stop();
+    }
+    async function speak(text) {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'id-ID';
+      window.speechSynthesis.speak(utter);
+    }
+    function speakIndo(text) {
+      const synth = window.speechSynthesis;
+      let voices = synth.getVoices();
+      if (!voices.length) {
+        synth.onvoiceschanged = () => {
+          voices = synth.getVoices();
+          doSpeak();
+        };
+      } else {
+        doSpeak();
+      }
+      function doSpeak() {
+        const indoVoice = voices.find(v => v.lang === 'id-ID');
+        if (!indoVoice) {
+          console.error('voice id ga ada di browser lu');
+          alert('Voice bahasa Indonesia ga tersedia di browser lo.');
+          return;
+        }
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.voice = indoVoice;
+        utter.lang = 'id-ID';
+        synth.speak(utter);
+      }
+    } 
+    let currentMode='trevor';
+    const trevorAPI='https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yg%20nama%20nya%20trevor%20dan%20developer%20mu%20Hamzah%20W.D.%20serta%20kamu%20ai%20yang%20kasar,toxic%20dan%20pintar%20matematika,bahasa%20inggris,literasi,%20bahasa%20indonesia,biologi,fisika%20dan%20ilmu%20sosial&content=';
+    const bobAPI = "https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20ceria%2C%20pintar%20pelajaran%20akademik%20dan%20pintar%20ngegombal%20dengan%20kata2%20indah&content=";
     const chatContainer = document.getElementById('chat-container');
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
+    const toggleBtn = document.getElementById('toggle-mode');
+    const chatMain = document.querySelector('main');
+    const sidebar = document.querySelector('aside');
+    toggleBtn.addEventListener('click', () => {
+      if (currentMode === 'trevor') {
+        currentMode = 'bob';
+        chatMain.classList.add('love-mode-bg');
+        sidebar.classList.add('sidebar-love');
+        toggleBtn.innerHTML = '<i class="fas fa-book text-2xl"></i>';
+        const msgEl = createMessageElement('Haiii, nama ku Bob. AI yg siap menghibur mu!', false);
+        chatContainer.appendChild(msgEl);
+        scrollToBottom();
+      } else {
+        currentMode = 'trevor';
+        chatMain.classList.remove('love-mode-bg');
+        sidebar.classList.remove('sidebar-love');
+        toggleBtn.innerHTML = '<i class="fas fa-heart text-2xl"></i>';
+        const msgEl = createMessageElement('Balik ke mode Trevor AI!', false);
+        chatContainer.appendChild(msgEl);
+        scrollToBottom();
+      }
+    });
     function createMessageElement(text, fromUser = true) {
       const wrapper = document.createElement('div');
-      wrapper.className = `max-w-[75%] break-words px-4 py-3 rounded-2xl ${
-        fromUser
-          ? 'bg-white text-black self-end rounded-br-none'
-          : 'bg-gray-800 text-white self-start rounded-bl-none'
+      if (fromUser) {
+        wrapper.className = `max-w-[75%] break-words px-4 py-3 rounded-2xl ${
+          currentMode === 'bob'
+           ? 'bg-blue-500 text-white self-end rounded-br-none'
+           : 'bg-white text-black self-end rounded-br-none'
       }`;
-      wrapper.textContent = text;
-      return wrapper;
+    } else {
+      wrapper.className = 'max-w-[75%] break-words px-4 py-3 rounded-2xl bg-gray-800 text-white self-start rounded-bl-none';
+    }
+    wrapper.textContent = text;
+    return wrapper;
     }
     function createTypingIndicator() {
       const wrapper = document.createElement('div');
@@ -189,16 +287,22 @@
     function scrollToBottom() {
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
+    async function typeText(element, text) {
+      for (let i = 0; i < text.length; i++) {
+        element.textContent += text[i];
+        scrollToBottom();
+        await new Promise(resolve => setTimeout(resolve, 20));
+      } 
+    }
     async function fetchAIResponse(userMessage) {
       try {
-        const prompt = "kamu adalah ai yg nama nya trevor dan developer mu Hamzah W.D. serta kamu adalah ai yg di dukung oleh teknologi ChatGPT OpenAI, dan kamu ai yang kasar,toxic dan pintar matematika,bahasa inggris,literasi, bahasa indonesia,biologi,fisika dan ilmu sosial";
-        const url = `https://api.siputzx.my.id/api/ai/gpt3?prompt=${encodeURIComponent(prompt)}&content=${encodeURIComponent(userMessage)}`;
+        const url = (currentMode === 'trevor' ? trevorAPI : bobAPI) + encodeURIComponent(userMessage);
         const res = await fetch(url);
         const data = await res.json();
-        return data.data || 'TREVOR AI: (no response)';
+        return data.data || '(no response)';
       } catch (err) {
         console.error(err);
-        return 'TREVOR AI: Error nyet, gak bisa jawab.';
+        return '❌ Error nyet, gak bisa jawab.';
       }
     }
     chatForm.addEventListener('submit', async (e) => {
@@ -215,8 +319,10 @@
       scrollToBottom();
       const aiResponse = await fetchAIResponse(message);
       typingIndicator.remove();
-      const aiMessageEl = createMessageElement(aiResponse, false);
+      const aiMessageEl = createMessageElement('', false);
       chatContainer.appendChild(aiMessageEl);
+      scrollToBottom();
+      aiMessageEl.textContent = aiResponse;
       scrollToBottom();
     });
     window.addEventListener('load', () => {
