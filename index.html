@@ -183,20 +183,49 @@
     const micPermissionModal = document.getElementById('mic-permission-modal');
     const allowMicBtn = document.getElementById('allow-mic');
     const denyMicBtn = document.getElementById('deny-mic');
-    allowMicBtn.addEventListener('click', () => {
+    async function checkMicrophonePermission() {
+      try {
+        const permissionStatus = await navigator.permissions.query({ name: 'microphone' });
+        return permissionStatus.state;
+        } catch (e) {
+          console.warn('Permissions API not supported, using fallback');
+          return 'prompt';
+        }
+    }
+    allowMicBtn.addEventListener('click', async () => {
       micPermissionModal.classList.add('hidden');
-      micModal.classList.remove('hidden');
-      startListening();
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true});
+        stream.getTracks().forEach(track => track.stop());
+        micModal.classList.remove('hidden');
+        startListening();
+      } catch (err) {
+        console.error('Error acsessing microphone:', err);
+        alert('Gagal mengakses mikrofon:', + err.message);
+      }
     });
     denyMicBtn.addEventListener('click', () => {
       micPermissionModal.classList.add('hidden');
     });
-    micBtn.addEventListener('click', () => {
+    micBtn.addEventListener('click', async () => {
       if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
         alert('Browser lu gak support voice recognition. Coba pake laptop.');
         return;
       }
-      micPermissionModal.classList.remove('hidden');
+      try {
+        const permissionsState = await checkMicrophonePermission();
+        if (permissionsState === 'granted') {
+          micModal.classList.remove('hidden');
+          startListening();
+        } else if (permissionsState === 'prompt') {
+          micPermissionModal.classList.remove('hidden');
+        } else {
+          alert ('Izin mikrofon di tolak. silahkan aktifkan mikrofon untuk situs ini di pengaturan browser');
+        }
+      } catch (err) {
+        console.error('Error checking permissions:', err);
+        micPermissionModal.classList.remove('hidden');
+      }
     });
     closeMic.addEventListener('click', () => {
       micModal.classList.add('hidden');
@@ -221,7 +250,10 @@
       recognition.start();
     }
     function stopListening() {
-      if (recognition) recognition.stop();
+      if (recognition) {
+        recognition.stop();
+        recognition = null;
+      } 
     }
     async function speak(text) {
       const utter = new SpeechSynthesisUtterance(text);
