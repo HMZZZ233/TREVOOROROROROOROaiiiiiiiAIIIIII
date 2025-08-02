@@ -214,9 +214,17 @@
       }
       try {
         const permissionsState = await checkMicrophonePermission();
-        stream.getTracks().forEach(track => track.stop());
-        micModal.classList.remove('hidden')
-        startListening();
+        if (permissionsState === 'granted') {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach(track => track.stop());
+          micModal.classList.remove('hidden');
+          startListening();
+        } else if (permissionsState === 'prompt') {
+          micPermissionModal.classList.remove('hidden');
+        } else {
+          alert('Akses mikrodon lu di blokir. cek settings browser');
+        }
+        
       } catch (err) {
         console.error('Error checking permissions:', err);
         alert('gagal aksees mikrofon: ' + err.name + ' - ' + err.message)
