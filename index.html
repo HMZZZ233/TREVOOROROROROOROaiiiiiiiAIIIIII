@@ -210,20 +210,16 @@
     micBtn.addEventListener('click', async () => {
       if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
         alert('Browser lu gak support voice recognition. Coba pake laptop.');
+        return;
       }
       try {
         const permissionsState = await checkMicrophonePermission();
-        if (permissionsState === 'granted') {
-          micModal.classList.remove('hidden');
-          startListening();
-        } else if (permissionsState === 'prompt') {
-          micPermissionModal.classList.remove('hidden');
-        } else {
-          alert ('Izin mikrofon di tolak. silahkan aktifkan mikrofon untuk situs ini di pengaturan browser');
-        }
+        stream.getTracks().forEach(track => track.stop());
+        micModal.classList.remove('hidden')
+        startListening();
       } catch (err) {
         console.error('Error checking permissions:', err);
-        micPermissionModal.classList.remove('hidden');
+        alert('gagal aksees mikrofon: ' + err.name + ' - ' + err.message)
       }
     });
     closeMic.addEventListener('click', () => {
