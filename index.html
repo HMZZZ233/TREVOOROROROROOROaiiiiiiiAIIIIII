@@ -226,7 +226,7 @@
         }
       } catch (err) {
         console.error('Error checking permissions:', err);
-        alert('Gagal mengakses mikrofon: ' + err.name + ' - ' + err.message);
+        alert(`Gagal mengakses mikrofon: ${err.name} - ${err.message}`);
       }
     });
     closeMic.addEventListener('click', () => {
