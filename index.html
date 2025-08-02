@@ -201,7 +201,7 @@
         startListening();
       } catch (err) {
         console.error('Error acsessing microphone:', err);
-        alert('Gagal mengakses mikrofon:', + err.message);
+        alert('Gagal mengakses mikrofon:', + err.name + ' - ' + err.message);
       }
     });
     denyMicBtn.addEventListener('click', () => {
@@ -210,7 +210,6 @@
     micBtn.addEventListener('click', async () => {
       if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
         alert('Browser lu gak support voice recognition. Coba pake laptop.');
-        return;
       }
       try {
         const permissionsState = await checkMicrophonePermission();
