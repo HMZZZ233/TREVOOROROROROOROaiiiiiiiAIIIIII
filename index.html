@@ -246,7 +246,7 @@
         chatContainer.appendChild(userMessageEl);
         scrollToBottom();
         const aiResponse = await fetchAIResponse(text);
-        speakIndo(aiResponse);
+        playTTS(aiResponse)
       };
       recognition.onerror = (e) => console.error('Recognition error:', e);
       recognition.start();
@@ -261,30 +261,6 @@
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = 'id-ID';
       window.speechSynthesis.speak(utter);
-    }
-    function speakIndo(text) {
-      const synth = window.speechSynthesis;
-      let voices = synth.getVoices();
-      if (!voices.length) {
-        synth.onvoiceschanged = () => {
-          voices = synth.getVoices();
-          doSpeak();
-        };
-      } else {
-        doSpeak();
-      }
-      function doSpeak() {
-        const indoVoice = voices.find(v => v.lang === 'id-ID');
-        if (!indoVoice) {
-          console.error('voice id ga ada di browser lu');
-          alert('Voice bahasa Indonesia ga tersedia di browser lo.');
-          return;
-        }
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.voice = indoVoice;
-        utter.lang = 'id-ID';
-        synth.speak(utter);
-      }
     } 
     let currentMode='trevor';
     const trevorAPI='https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yg%20nama%20nya%20trevor%20dan%20developer%20mu%20Hamzah%20W.D.%20serta%20kamu%20ai%20yang%20kasar,toxic%20dan%20pintar%20matematika,bahasa%20inggris,literasi,%20bahasa%20indonesia,biologi,fisika%20dan%20ilmu%20sosial&content=';
@@ -382,7 +358,17 @@
       scrollToBottom();
       aiMessageEl.textContent = aiResponse;
       scrollToBottom();
+      playTTS(aiResponse);
     });
+    async function playTTS(text) {
+      try {
+        const ttsUrl = `https://api.siputzx.my.id/api/tools/ttsgoogle?text=${encodeURIComponent(text)}`;
+        const audio = new Audio(ttsUrl);
+        await audio.play();
+      } catch (e) {
+        console.error('gagal play tts');
+      }
+    }
     window.addEventListener('load', () => {
         chatInput.focus();
         const navHome = document.getElementById('nav-home');
