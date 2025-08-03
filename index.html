@@ -134,6 +134,10 @@
     <button id="mic-btn" type="button" class="text-blue-500 hover:text-blue-300 focus:outline-none">
       <i class="fas fa-microphone"></i>
     </button>
+    <button id="gen-img-btn" type="button"
+      class="text-green-500 hover:text-green-300 focus:outline-none">
+      <i class="fas fa-image text-2xl"></i>
+    </button>
    </form>
    <div id="mic-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex flex-col items-center justify-center z-50 hidden">
     <img src="https://uploads.onecompiler.io/43e3nkn3a/43cxu8ubd/Screenshot_2025-08-01_162917-removebg-preview.png" alt="Robot" class="w-32 h-32 mb-4">
@@ -177,6 +181,7 @@
   </section>
   </main>
   <script>
+    let isVoiceMode = false;
     const micBtn = document.getElementById('mic-btn');
     const micModal = document.getElementById('mic-modal');
     const closeMic = document.getElementById('close-mic');
@@ -235,27 +240,37 @@
     });
     let recognition;
     function startListening() {
-      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-      recognition.lang = 'id-ID'; 
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-      recognition.onresult = async (event) => {
-        const text = event.results[0][0].transcript;
-        console.log('You said:', text);
-        const userMessageEl = createMessageElement(text, true);
-        chatContainer.appendChild(userMessageEl);
-        scrollToBottom();
-        const aiResponse = await fetchAIResponse(text);
-        playTTS(aiResponse)
-      };
-      recognition.onerror = (e) => console.error('Recognition error:', e);
-      recognition.start();
+        isVoiceMode = true;
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'id-ID';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.onresult = async (event) => {
+            const text = event.results[0][0].transcript;
+            console.log('You said:', text);
+            const userMessageEl = createMessageElement(text, true);
+            chatContainer.appendChild(userMessageEl);
+            scrollToBottom();
+            const aiResponse = await fetchAIResponse(text);
+            await playTTS(aiResponse);
+            const aiMessageEl = createMessageElement('', false);
+            chatContainer.appendChild(aiMessageEl);
+            scrollToBottom();
+            aiMessageEl.textContent = aiResponse;
+            scrollToBottom();
+            if (isVoiceMode) {
+                startListening();  
+            }
+        };
+        recognition.onerror = (e) => console.error('Recognition error:', e);
+        recognition.start();
     }
     function stopListening() {
       if (recognition) {
         recognition.stop();
         recognition = null;
-      } 
+      }
+      isVoiceMode = false; 
     }
     async function speak(text) {
       const utter = new SpeechSynthesisUtterance(text);
@@ -267,6 +282,46 @@
     const bobAPI = "https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20ceria%2C%20pintar%20pelajaran%20akademik%20dan%20pintar%20ngegombal%20dengan%20kata2%20indah&content=";
     const chatContainer = document.getElementById('chat-container');
     const chatForm = document.getElementById('chat-form');
+    const genImgBtn = document.getElementById('gen-img-btn');
+    genImgBtn.addEventListener('click', async () => {
+      const prompt = chatInput.value.trim();
+      if (!prompt) {
+        alert('Isi dulu prompt nya sayangg hm..');
+        return;
+      }
+      const userMessageEl = createMessageElement(prompt, true);
+      chatContainer.appendChild(userMessageEl);
+      scrollToBottom();
+      const typingIndicator = createTypingIndicator();
+      chatContainer.appendChild(typingIndicator);
+      scrollToBottom();
+      const bannedKeywords = ['sexy', 'naked', 'lingerie', 'bikini', 'porn', 'boobs', 'nsfw', 'xxx', 'nude'];
+      const lowerPrompt = prompt.toLowerCase();
+      if (bannedKeywords.some(word => lowerPrompt.includes(word))) {
+        alert('❌ heyyy, gaboleh gituuu sayanggg....')
+        return;
+      }
+      try {
+        const res = await fetch(`https://api.ammaricano.my.id/api/ai/ai4chat/image?prompt=${encodeURIComponent(prompt)}`);
+        const blob = await res.blob();
+        typingIndicator.remove();
+        const imgUrl = URL.createObjectURL(blob);
+        const imgEl = document.createElement('img');
+        imgEl.src = imgUrl;
+        imgEl.alt = prompt;
+        imgEl.className = 'max-w-[75%] rounded-2xl self-start mt-2';
+        chatContainer.appendChild(imgEl);
+        scrollToBottom();
+      } catch (err) {
+        typingIndicator.remove();
+        console.error('Error generate image:', err);
+        const errMsg = createMessageElement('❌ Error nyet, gagal panggil API.', false);
+        chatContainer.appendChild(errMsg);
+        scrollToBottom();
+      }
+      chatInput.value = '';
+      chatInput.focus();
+    });
     const chatInput = document.getElementById('chat-input');
     const toggleBtn = document.getElementById('toggle-mode');
     const chatMain = document.querySelector('main');
@@ -291,18 +346,18 @@
       }
     });
     function createMessageElement(text, fromUser = true) {
-      const wrapper = document.createElement('div');
-      if (fromUser) {
-        wrapper.className = `max-w-[75%] break-words px-4 py-3 rounded-2xl ${
-          currentMode === 'bob'
-           ? 'bg-blue-500 text-white self-end rounded-br-none'
-           : 'bg-white text-black self-end rounded-br-none'
-      }`;
-    } else {
-      wrapper.className = 'max-w-[75%] break-words px-4 py-3 rounded-2xl bg-gray-800 text-white self-start rounded-bl-none';
-    }
-    wrapper.textContent = text;
-    return wrapper;
+        const wrapper = document.createElement('div');
+        if (fromUser) {
+            wrapper.className = `max-w-[75%] break-words px-4 py-3 rounded-2xl ${
+                currentMode === 'bob'
+                    ? 'bg-blue-500 text-white self-end rounded-br-none'
+                    : 'bg-white text-black self-end rounded-br-none'
+            }`;
+        } else {
+            wrapper.className = 'max-w-[75%] break-words px-4 py-3 rounded-2xl bg-gray-800 text-white self-start rounded-bl-none';
+        }
+        wrapper.textContent = text;
+        return wrapper;
     }
     function createTypingIndicator() {
       const wrapper = document.createElement('div');
@@ -325,7 +380,7 @@
       for (let i = 0; i < text.length; i++) {
         element.textContent += text[i];
         scrollToBottom();
-        await new Promise(resolve => setTimeout(resolve, 20));
+        await new Promise(resolve => setTimeout(resolve, 10));
       } 
     }
     async function fetchAIResponse(userMessage) {
@@ -340,25 +395,27 @@
       }
     }
     chatForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const message = chatInput.value.trim();
-      if (!message) return;
-      const userMessageEl = createMessageElement(message, true);
-      chatContainer.appendChild(userMessageEl);
-      scrollToBottom();
-      chatInput.value = '';
-      chatInput.focus();
-      const typingIndicator = createTypingIndicator();
-      chatContainer.appendChild(typingIndicator);
-      scrollToBottom();
-      const aiResponse = await fetchAIResponse(message);
-      typingIndicator.remove();
-      const aiMessageEl = createMessageElement('', false);
-      chatContainer.appendChild(aiMessageEl);
-      scrollToBottom();
-      aiMessageEl.textContent = aiResponse;
-      scrollToBottom();
-      playTTS(aiResponse);
+        e.preventDefault();
+        const message = chatInput.value.trim();
+        if (!message) return;
+        const userMessageEl = createMessageElement(message, true);
+        chatContainer.appendChild(userMessageEl);
+        scrollToBottom();
+        chatInput.value = '';
+        chatInput.focus();
+        const typingIndicator = createTypingIndicator();
+        chatContainer.appendChild(typingIndicator);
+        scrollToBottom();
+        const aiResponse = await fetchAIResponse(message);
+        typingIndicator.remove();
+        const aiMessageEl = createMessageElement('', false);
+        chatContainer.appendChild(aiMessageEl);
+        scrollToBottom();
+        await typeText(aiMessageEl, aiResponse);
+        scrollToBottom();
+        if (isVoiceMode) {
+          await playTTS(aiResponse);
+        }
     });
     async function playTTS(text) {
       try {
@@ -369,7 +426,6 @@
           audio.play();
         });
         await new Promise((res) => setTimeout(res, 2000));
-        startListening();
       } catch (e) {
         console.error('Error play tts atau restart mic:', e);
       }
@@ -417,4 +473,4 @@
     });
   </script>
  </body>
-</html>
+</html> 
