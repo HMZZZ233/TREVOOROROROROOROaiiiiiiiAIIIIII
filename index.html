@@ -118,7 +118,7 @@
      <p class="text-gray-400">V1.3</p>
      <div class="space-x-4">
        <button id="welcome-gen-img" class="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transform hover:scale-95 transition">
-         <i class="fas fa-image mr-2"></i> Generate Image With Prompt
+         <i class="fas fa-image mr-2"></i> Generate Image With Prompt(use english prompt)
        </button>
        <button id="welcome-talk" class="bg-pink-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-pink-400 transform hover:scale-95 transition">
          <i class="fas fa-microphone mr-2"></i> Talk With Trevor AI
@@ -295,8 +295,8 @@
       window.speechSynthesis.speak(utter);
     } 
     let currentMode='trevor';
-    const trevorAPI='https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yg%20nama%20nya%20trevor%20dan%20developer%20mu%20Hamzah%20W.D.%20serta%20kamu%20ai%20yang%20kasar,toxic%20dan%20pintar%20matematika,bahasa%20inggris,literasi,%20bahasa%20indonesia,biologi,fisika%20dan%20ilmu%20sosial&content=';
-    const bobAPI = "https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20ceria%2C%20pintar%20pelajaran%20akademik%20dan%20pintar%20ngegombal%20dengan%20kata2%20indah&content=";
+    const trevorAPI='https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yg%20nama%20nya%20trevor%20dan%20developer%20mu%20Hamzah%20W.D.%20serta%20kamu%20ai%20yang%20sangat%20Kasar%20namun%20ramah,toxic,suka%20Ngejokes%20ga%20banyak%20omong%20dan%20pintar%20matematika,bahasa%20inggris,literasi,%20bahasa%20indonesia,biologi,fisika%20dan%20ilmu%20sosial&content=';
+    const bobAPI = "https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20ceria%20Buatan%20Hamzah%20W.D%20Berbasis%20ChatGPT%2C%20pintar%20pelajaran%20akademik%20dan%20pintar%20ngegombal%20dengan%20kata2%20indah&content=";
     const chatContainer = document.getElementById('chat-container');
     const chatForm = document.getElementById('chat-form');
     const genImgBtn = document.getElementById('gen-img-btn');
@@ -320,7 +320,7 @@
         return;
       }
       try {
-        const res = await fetch(`https://api.siputzx.my.id/api/ai/magicstudio?prompt=${encodeURIComponent(prompt)}`);
+        const res = await fetch(`https://api.ammaricano.my.id/api/ai/flux-schnell?prompt=${encodeURIComponent(prompt)}`);
         const blob = await res.blob();
         typingIndicator.remove();
         const imgUrl = URL.createObjectURL(blob);
