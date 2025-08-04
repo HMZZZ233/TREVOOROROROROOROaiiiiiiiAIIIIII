@@ -80,6 +80,10 @@
       background: linear-gradient(180deg, #a855f7, #f5f3ff);
       border-color: #c084fc;
     }
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
   </style>
  </head>
  <body class="flex h-screen overflow-hidden">
@@ -109,6 +113,18 @@
      TREVOR AI Chatbot
     </h1>
    </header>
+   <section id="welcome-section" class="flex flex-col items-center justify-center flex-1 text-center space-y-4">
+     <h2 class="text-3xl font-semibold">Hi, I'm Trevor. Nice to meet you!☺️</h2>
+     <p class="text-gray-400">V1.3</p>
+     <div class="space-x-4">
+       <button id="welcome-gen-img" class="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transform hover:scale-95 transition">
+         <i class="fas fa-image mr-2"></i> Generate Image With Prompt
+       </button>
+       <button id="welcome-talk" class="bg-pink-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-pink-400 transform hover:scale-95 transition">
+         <i class="fas fa-comments mr-2"></i> Talk With Trevor AI
+       </button>
+     </div>
+   </section>
    <section aria-live="polite" aria-relevant="additions" 
     class="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900" 
     id="chat-container">
@@ -172,6 +188,16 @@
   </section>
   </main>
   <script>
+    const welcomeSection = document.getElementById('welcome-section');
+    const welcomeTalkBtn = document.getElementById('welcome-talk');
+    const welcomeGenImgBtn = document.getElementById('welcome-gen-img');
+    function hideWelcomeSection() {
+      welcomeSection.classList.add('fade-out');
+      setTimeout(() => {
+        welcomeSection.classList.add('hidden');
+      }, 500);
+    }
+
     let isVoiceMode = false;
     const micBtn = document.getElementById('mic-btn');
     const micModal = document.getElementById('mic-modal');
@@ -204,6 +230,7 @@
       micPermissionModal.classList.add('hidden');
     });
     micBtn.addEventListener('click', async () => {
+      document.getElementById('welcome-section').classList.add('hidden');
       if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
         alert('Browser lu gak support voice recognition. Coba pake laptop.');
         return;
@@ -275,6 +302,7 @@
     const chatForm = document.getElementById('chat-form');
     const genImgBtn = document.getElementById('gen-img-btn');
     genImgBtn.addEventListener('click', async () => {
+      document.getElementById('welcome-section').classList.add('hidden');
       const prompt = chatInput.value.trim();
       if (!prompt) {
         alert('Isi dulu prompt nya sayangg hm..');
@@ -386,6 +414,7 @@
       }
     }
     chatForm.addEventListener('submit', async (e) => {
+        hideWelcomeSection();
         e.preventDefault();
         const message = chatInput.value.trim();
         if (!message) return;
@@ -428,6 +457,7 @@
         const ratingsSection = document.getElementById('ratings-section');
         const chatSection = document.getElementById('chat-container');
         navHome.addEventListener('click', () => {
+            document.getElementById('welcome-section').classList.remove('hidden', 'fade-out');
             chatContainer.innerHTML = '';
             const bioEl = document.createElement('div');
             bioEl.className = 'max-w-[75%] bg-gray-800 text-white rounded-2xl px-4 py-3 self-start space-y-2';
