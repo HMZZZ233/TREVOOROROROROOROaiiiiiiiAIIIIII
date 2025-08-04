@@ -83,38 +83,27 @@
   </style>
  </head>
  <body class="flex h-screen overflow-hidden">
-  <aside class="fixed top-0 left-0 h-full w-20 sm:w-24 md:w-28 bg-black border-r border-gray-800 flex flex-col items-center py-6 space-y-10">
-   <div class="flex flex-col items-center space-y-1 cursor-default select-none">
-    <img alt="TREVOR AI logo, stylized letter T in white on black square background" class="w-10 h-10 rounded-md" draggable="false" height="40" src="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" width="40"/>
-    <span class="text-xs font-semibold tracking-widest text-white uppercase select-none">
-     TREVOR AI
-    </span>
-   </div>
-   <nav aria-label="Main menu" class="flex flex-col space-y-8 mt-10" role="navigation">
-    <button aria-current="page" aria-label="Home" class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-home">
-     <i class="fas fa-home text-2xl mb-1">
-     </i>
-     <span class="text-xs font-semibold tracking-wide">
-      Home
-     </span>
-    </button>
-    <button aria-label="About us" class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-about">
-     <i class="fas fa-info-circle text-2xl mb-1">
-     </i>
-     <span class="text-xs font-semibold tracking-wide">
-      About us
-     </span>
-    </button>
-    <button aria-label="Ratings" class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-ratings">
-     <i class="fas fa-star text-2xl mb-1">
-     </i>
-     <span class="text-xs font-semibold tracking-wide">
-      Ratings
-     </span>
-    </button>
-   </nav>
+  <aside class="hidden md:flex fixed top-0 left-0 h-full w-28 bg-black border-r border-gray-800 flex-col items-center py-6 space-y-10">
+    <div class="flex flex-col items-center space-y-1 cursor-default select-none">
+      <img alt="TREVOR AI logo" class="w-10 h-10 rounded-md" src="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
+      <span class="text-xs font-semibold tracking-widest text-white uppercase">TREVOR AI</span>
+    </div>
+   <nav class="flex flex-col space-y-8 mt-10">
+     <button class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-home">
+       <i class="fas fa-home text-2xl mb-1"></i>
+       <span class="text-xs font-semibold tracking-wide">Home</span>
+      </button>
+      <button class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-about">
+        <i class="fas fa-info-circle text-2xl mb-1"></i>
+        <span class="text-xs font-semibold tracking-wide">About us</span>
+      </button>
+      <button class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-ratings">
+        <i class="fas fa-star text-2xl mb-1"></i>
+        <span class="text-xs font-semibold tracking-wide">Ratings</span>
+      </button>
+     </nav>
   </aside>
-  <main class="flex-1 flex flex-col ml-20 sm:ml-24 md:ml-28 bg-black">
+  <main class="flex-1 flex flex-col md:ml-28 bg-black">
    <header class="flex items-center justify-between border-b border-gray-800 px-6 py-4">
     <h1 class="text-white text-2xl font-semibold tracking-wide select-none">
      TREVOR AI Chatbot
@@ -278,7 +267,7 @@
       window.speechSynthesis.speak(utter);
     } 
     let currentMode='trevor';
-    const trevorAPI='https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yg%20nama%20nya%20trevor%20dan%20developer%20mu%20Hamzah%20W.D.%20serta%20kamu%20ai%20yang%20kasar,toxic%20hafal%20Quran%20dan%20pintar%20matematika,bahasa%20inggris,literasi,%20bahasa%20indonesia,biologi,fisika%20dan%20ilmu%20sosial&content=';
+    const trevorAPI='https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yg%20nama%20nya%20trevor%20dan%20developer%20mu%20Hamzah%20W.D.%20serta%20kamu%20ai%20yang%20kasar,toxic%20dan%20pintar%20matematika,bahasa%20inggris,literasi,%20bahasa%20indonesia,biologi,fisika%20dan%20ilmu%20sosial&content=';
     const bobAPI = "https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20ceria%2C%20pintar%20pelajaran%20akademik%20dan%20pintar%20ngegombal%20dengan%20kata2%20indah&content=";
     const chatContainer = document.getElementById('chat-container');
     const chatForm = document.getElementById('chat-form');
@@ -295,7 +284,7 @@
       const typingIndicator = createTypingIndicator();
       chatContainer.appendChild(typingIndicator);
       scrollToBottom();
-      const bannedKeywords = ['sexy', 'naked', 'lingerie', 'bikini', 'porn', 'boobs', 'nsfw', 'xxx', 'nude','hot','logo tesla','pulen','crot','gitar spanyol'];
+      const bannedKeywords = ['sexy', 'naked', 'lingerie', 'bikini', 'porn', 'boobs', 'nsfw', 'xxx', 'nude'];
       const lowerPrompt = prompt.toLowerCase();
       if (bannedKeywords.some(word => lowerPrompt.includes(word))) {
         alert('❌ heyyy, gaboleh gituuu sayanggg....')
