@@ -188,6 +188,7 @@
   </section>
   </main>
   <script>
+    let chatHistory = [];
     const welcomeSection = document.getElementById('welcome-section');
     const welcomeTalkBtn = document.getElementById('welcome-talk');
     const welcomeGenImgBtn = document.getElementById('welcome-gen-img');
@@ -403,9 +404,13 @@
     }
     async function fetchAIResponse(userMessage) {
       try {
+        chatHistory.push({ role: 'user', content: userMessage });
+        const promptText = chatHistory.map(msg => msg.content).join('\n');
         const url = (currentMode === 'trevor' ? trevorAPI : bobAPI) + encodeURIComponent(userMessage);
         const res = await fetch(url);
         const data = await res.json();
+        const responseText = data.data || '(no response)';
+        chatHistory.push({ role: 'assistant', content: responseText });
         return data.data || '(no response)';
       } catch (err) {
         console.error(err);
@@ -431,6 +436,7 @@
         chatContainer.appendChild(aiMessageEl);
         scrollToBottom();
         await typeText(aiMessageEl, aiResponse);
+        chatHistory.push({ role: 'user', content: message });
         scrollToBottom();
         if (isVoiceMode) {
           await playTTS(aiResponse);
