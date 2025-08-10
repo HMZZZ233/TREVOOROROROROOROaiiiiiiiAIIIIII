@@ -1,1981 +1,502 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https:/trevor-ai.vercel.app/" />
-    <meta property="og:title" content="TREVOR AI Chatbot" />
-    <meta property="og:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
-    <meta property="og:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://trevor-ai.vercel.app/" /> 
-    <meta name="twitter:title" content="TREVOR AI Chatbot" />
-    <meta name="twitter:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
-    <meta name="twitter:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-    <link rel="icon" href="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" type="image/png" />
-    <title>Trevor AI Chatbot</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --primary-bg: #121212;
-            --secondary-bg: #1e1e1e;
-            --sidebar-bg: #0a0a0a;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent: #4a80f0;
-            --accent-light: #6a9eff;
-            --accent-dark: #2a60d0;
-            --chat-bg: #252525;
-            --input-bg: #2d2d2d;
-            --border-radius: 16px;
-            --sidebar-width: 280px;
-            --card-bg: #1a1a1a;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --danger: #f44336;
-        }
-        
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            background-color: var(--primary-bg);
-            color: var(--text-primary);
-            display: flex;
-            position: relative;
-        }
-
-        .liquid-bg {
-            position: fixed;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: radial-gradient(circle at center, var(--secondary-bg) 0%, var(--primary-bg) 70%);
-            opacity: 0.8;
-            z-index: -1;
-            animation: liquidMove 20s infinite alternate;
-        }
-
-        @keyframes liquidMove {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
-            100% {
-                transform: rotate(2deg) scale(1.05);
-            }
-        }
-
-        /* Sidebar Styles */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: var(--sidebar-width);
-            background-color: var(--sidebar-bg);
-            padding: 1.5rem 1rem;
-            z-index: 100;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-out;
-            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
-            overflow-y: auto;
-        }
-
-        .sidebar.open {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .close-sidebar:hover {
-            color: var(--text-primary);
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: var(--border-radius);
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-        }
-
-        .menu-item.active {
-            background-color: var(--accent);
-            color: white;
-        }
-
-        .menu-item i {
-            margin-right: 1rem;
-            font-size: 1.1rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .menu-item span {
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        /* Main Content Styles */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            transition: margin-left 0.3s ease-out;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            padding: 1.5rem;
-            background-color: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 10;
-            flex-shrink: 0;
-        }
-
-        .menu-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            margin-right: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .menu-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        .header-info {
-            flex: 1;
-        }
-
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            background: linear-gradient(90deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .header p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: calc(100% - 80px);
-            position: relative;
-            padding: 0 1rem 1rem;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            margin-bottom: 0.4rem;
-            border-radius: var(--border-radius);
-            background-color: var(--chat-bg);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--chat-bg);
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: var(--chat-bg);
-            border-radius: 10px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background-color: var(--accent);
-            border-radius: 10px;
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 0.8rem 1.2rem;
-            border-radius: var(--border-radius);
-            max-width: 80%;
-            line-height: 1.5;
-            position: relative;
-            animation: fadeIn 0.3s ease-out;
-            word-wrap: break-word;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .user-message {
-            background-color: var(--accent);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
-        }
-
-        .bot-message {
-            background-color: var(--input-bg);
-            margin-right: auto;
-            border-bottom-left-radius: 4px;
-        }
-
-        .input-container {
-            display: flex;
-            padding: 0.8rem;
-            background-color: var(--input-bg);
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-            flex-shrink: 0;
-        }
-
-        .input-container input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            padding: 0.8rem;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .input-container input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .action-button {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .action-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-        }
-
-        .action-button.active {
-            color: var(--accent);
-        }
-
-        .typing-indicator {
-            display: flex;
-            padding: 0.8rem 1.2rem;
-            background-color: var(--input-bg);
-            border-radius: var(--border-radius);
-            margin-right: auto;
-            margin-bottom: 1rem;
-            border-bottom-left-radius: 4px;
-            width: fit-content;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--text-secondary);
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typingAnimation 1.4s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingAnimation {
-            0%, 60%, 100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 50;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* Page Content Styles */
-        .page-content {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .page-content.active {
-            display: block;
-        }
-
-        .page-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-        }
-
-        .page-title i {
-            margin-right: 1rem;
-            color: var(--accent);
-        }
-
-        .page-description {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        /* Card Styles */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .card-body {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Grid Layout */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Feature List */
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-        }
-
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
-
-        .feature-list i {
-            color: var(--accent);
-            margin-right: 1rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        /* Settings Styles */
-        .setting-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .setting-item:last-child {
-            border-bottom: none;
-        }
-
-        .setting-icon {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(74, 128, 240, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .setting-info {
-            flex: 1;
-        }
-
-        .setting-title {
-            font-weight: 500;
-            margin-bottom: 0.2rem;
-        }
-
-        .setting-description {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--accent);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        /* Profile Styles */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1.5rem;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-info h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .profile-info p {
-            color: var(--text-secondary);
-        }
-
-        .stats-container {
-            display: flex;
-            margin: 1.5rem 0;
-        }
-
-        .stat-item {
-            flex: 1;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Support Styles */
-        .support-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-
-        .support-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .support-icon {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(74, 128, 240, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1.5rem;
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        .support-info h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        .support-info p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Documentation Styles */
-        .doc-item {
-            margin-bottom: 1.5rem;
-            border-left: 3px solid var(--accent);
-            padding-left: 1rem;
-        }
-
-        .doc-item h3 {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .doc-item h3 i {
-            margin-right: 0.8rem;
-            color: var(--accent);
-        }
-
-        .doc-item p {
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .doc-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .doc-link i {
-            margin-left: 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        /* Chat History Styles */
-        .history-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            background-color: var(--card-bg);
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .history-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .history-icon {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(74, 128, 240, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .history-info {
-            flex: 1;
-        }
-
-        .history-title {
-            font-weight: 500;
-            margin-bottom: 0.2rem;
-        }
-
-        .history-date {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .history-actions {
-            display: flex;
-        }
-
-        .history-action {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            margin-left: 0.5rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .history-action:hover {
-            color: var(--text-primary);
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-
-        .badge-primary {
-            background-color: rgba(74, 128, 240, 0.2);
-            color: var(--accent);
-        }
-
-        .badge-success {
-            background-color: rgba(76, 175, 80, 0.2);
-            color: var(--success);
-        }
-
-        .badge-warning {
-            background-color: rgba(255, 152, 0, 0.2);
-            color: var(--warning);
-        }
-
-        .badge-danger {
-            background-color: rgba(244, 67, 54, 0.2);
-            color: var(--danger);
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.7rem 1.2rem;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            outline: none;
-        }
-
-        .btn i {
-            margin-right: 0.5rem;
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-light);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(74, 128, 240, 0.1);
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: var(--input-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            border-color: var(--accent);
-            outline: none;
-        }
-
-        .form-text {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.3rem;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        .tab {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            position: relative;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .tab.active {
-            color: var(--accent);
-        }
-
-        .tab.active:after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
-
-        .delay-1 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.3s;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            :root {
-                --sidebar-width: 260px;
-            }
-            
-            .chat-container {
-                padding: 0 0.5rem 0.5rem;
-                height: calc(100% - 70px);
-            }
-            
-            .header {
-                padding: 1rem;
-            }
-            
-            .header h1 {
-                font-size: 1.3rem;
-            }
-            
-            .message {
-                max-width: 90%;
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .input-container {
-                padding: 0.6rem;
-            }
-            
-            .action-button {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-            }
-
-            .page-content {
-                padding: 1.5rem 1rem;
-            }
-
-            .page-title {
-                font-size: 1.5rem;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .profile-avatar {
-                margin-right: 0;
-                margin-bottom: 1rem;
-            }
-
-            .stats-container {
-                flex-direction: column;
-            }
-
-            .stat-item {
-                padding: 0.5rem;
-            }
-        }
-        .image-modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.95);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                flex-direction: column;
-        }
-
-        .image-modal img {
-                max-width: 90%;
-                max-height: 80%;
-                border-radius: 12px;
-                box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-        }
-
-        .image-modal .modal-controls {
-                position: absolute;
-                top: 20px;
-                width: 100%;
-                padding: 0 30px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-        }
-
-        .image-modal button {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 1.8rem;
-                cursor: pointer;
-                transition: 0.2s;
-        }
-
-        .image-modal button:hover {
-                color: var(--accent);
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.9; }
-        }
-        .voice-overlay {
-            display: flex;
-        }
-    </style>
-</head>
-<body>
-    <div id="voiceOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:#000000dd; z-index:9999; align-items:center; justify-content:center; flex-direction:column;" class="voice-overlay">
-        <img src="https://cdn-icons-png.flaticon.com/512/4829/4829581.png" alt="Trevor Logo" style="width:100px; height:100px; animation:pulse 1s infinite;">
-        <canvas id="waveform" width="320" height="80" style="margin: 20px 0;"></canvas>
-        <button id="stopVoice" style="background:red; border:none; padding:14px 16px; border-radius:50%; cursor:pointer; color:white; font-size:20px;">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>    
-    <div class="liquid-bg"></div>
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h2>Trevor AI</h2>
-            <button class="close-sidebar" id="closeSidebar">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <a href="#" class="menu-item active" data-page="home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="#" class="menu-item" data-page="about">
-            <i class="fas fa-info-circle"></i>
-            <span>About Us</span>
-        </a>
-        <a href="#" class="menu-item" data-page="settings">
-            <i class="fas fa-cog"></i>
-            <span>Settings</span>
-        </a>
-        <a href="#" class="menu-item" data-page="history">
-            <i class="fas fa-history"></i>
-            <span>Chat History</span>
-        </a>
-        <a href="#" class="menu-item" data-page="features">
-            <i class="fas fa-lightbulb"></i>
-            <span>Features</span>
-        </a>
-        <a href="#" class="menu-item" data-page="docs">
-            <i class="fas fa-book"></i>
-            <span>Documentation</span>
-        </a>
-        <a href="#" class="menu-item" data-page="support">
-            <i class="fas fa-headset"></i>
-            <span>Support</span>
-        </a>
-        <a href="#" class="menu-item" data-page="profile">
-            <i class="fas fa-user"></i>
-            <span>Profile</span>
-        </a>
+<html class="scroll-smooth" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https:/trevor-ai.vercel.app/" />
+  <meta property="og:title" content="TREVOR AI Chatbot" />
+  <meta property="og:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
+  <meta property="og:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://trevor-ai.vercel.app/" /> 
+  <meta name="twitter:title" content="TREVOR AI Chatbot" />
+  <meta name="twitter:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
+  <meta name="twitter:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
+  <link rel="icon" href="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" type="image/png" />
+  <title>
+   TREVOR AI Chatbot
+  </title>
+  <!--Apa lu lihat lihat sumber kode???-->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    @keyframes wave {
+      0%, 60%, 100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-6px);
+      }
+    }
+    .wave > span {
+      display: inline-block;
+      font-size: 1.5rem;
+      animation-name: wave;
+      animation-duration: 1.2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      margin-right: 2px;
+      color: #fff;
+    }
+    .wave > span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .wave > span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    .wave > span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+    .love-mode-bg {
+      background: linear-gradient(135deg, #ffffff, #d946d9, #ec4899, #3b82f6);
+      background-size: 400% 400%;
+      animation: gradientMove 8s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    main {
+      transition: background 0.5s ease;
+    }
+    @keyframes waveAnim {
+      0%, 100% { height: 0.5rem; }
+      50% { height: 2rem; }
+    }
+    .animate-wave {
+      animation: waveAnim 1s infinite ease-in-out;
+    }
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+    .sidebar-love {
+      background: linear-gradient(180deg, #a855f7, #f5f3ff);
+      border-color: #c084fc;
+    }
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+  </style>
+ </head>
+ <body class="flex h-screen overflow-hidden">
+  <aside class="hidden md:flex fixed top-0 left-0 h-full w-28 bg-black border-r border-gray-800 flex-col items-center py-6 space-y-10">
+    <div class="flex flex-col items-center space-y-1 cursor-default select-none">
+      <img alt="TREVOR AI logo" class="w-10 h-10 rounded-md" src="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
+      <span class="text-xs font-semibold tracking-widest text-white uppercase">TREVOR AI</span>
     </div>
-    <div class="overlay" id="overlay"></div>
-    <div class="main-content" id="mainContent">
-        <div class="header">
-            <button class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="header-info">
-                <h1>Trevor AI</h1>
-                <p>Your intelligent assistant ready to help with any questions</p>
-            </div>
-        </div> 
-        
-        <!-- Home Page -->
-        <div class="page-content active" id="home-page">
-            <div class="chat-container">
-                <div class="chat-messages" id="chatMessages">
-                </div>
-                <div class="input-container">
-                    <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
-                    <button class="action-button" id="imageButton" title="Attach image">
-                        <i class="fas fa-image"></i>
-                    </button>
-                    <button class="action-button" id="micButton" title="Voice input">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <button class="action-button" id="sendButton" title="Send message">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- About Us Page -->
-        <div class="page-content" id="about-page">
-            <h1 class="page-title"><i class="fas fa-info-circle"></i> About Trevor AI</h1>
-            <p class="page-description">Learn more about our mission, vision, and the team behind this revolutionary AI assistant.</p>
-            
-            <div class="card animate-fadeInUp">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h2 class="card-title">Our Mission</h2>
-                </div>
-                <div class="card-body">
-                    <p>At Trevor AI, we're dedicated to creating intelligent, intuitive, and accessible AI technology that enhances human productivity and creativity. Our mission is to democratize AI assistance, making cutting-edge technology available to everyone.</p>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-1">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h2 class="card-title">Our Vision</h2>
-                </div>
-                <div class="card-body">
-                    <p>We envision a future where AI seamlessly integrates with daily life, augmenting human capabilities without replacing the human touch. Trevor AI is designed to be your digital companion - helpful, intelligent, and always learning.</p>
-                </div>
-            </div>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-users"></i> Meet the Team</h2>
-            
-            <div class="grid">
-                <div class="card animate-fadeInUp delay-2">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.2); color: var(--success);">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h2 class="card-title">Hamzah Wisnu Dzaky <span class="badge badge-success">Founder</span></h2>
-                    </div>
-                    <div class="card-body">
-                        <p>The visionary behind Trevor AI, with over 10 years of experience in AI research and development. Passionate about creating technology that makes a difference.</p>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        <!-- Settings Page -->
-        <div class="page-content" id="settings-page">
-            <h1 class="page-title"><i class="fas fa-cog"></i> Settings</h1>
-            <p class="page-description">Customize your Trevor AI experience to suit your preferences.</p>
-            
-            <div class="card animate-fadeInUp">
-                <h2 class="card-title" style="margin-bottom: 1.5rem;"><i class="fas fa-user-shield" style="color: var(--accent); margin-right: 0.8rem;"></i> Privacy & Security</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Chat History</h3>
-                        <p class="setting-description">Save your conversation history for future reference</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Data Collection</h3>
-                        <p class="setting-description">Help improve Trevor AI by sharing anonymous usage data</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-bell"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Notifications</h3>
-                        <p class="setting-description">Receive notifications for important updates</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-1">
-                <h2 class="card-title" style="margin-bottom: 1.5rem;"><i class="fas fa-palette" style="color: var(--accent); margin-right: 0.8rem;"></i> Appearance</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-moon"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Dark Mode</h3>
-                        <p class="setting-description">Switch between light and dark themes</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Accent Color</label>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn btn-outline" style="background-color: #4a80f0; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Blue"></button>
-                        <button class="btn btn-outline" style="background-color: #4CAF50; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Green"></button>
-                        <button class="btn btn-outline" style="background-color: #FF9800; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Orange"></button>
-                        <button class="btn btn-outline" style="background-color: #9C27B0; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Purple"></button>
-                        <button class="btn btn-outline" style="background-color: #F44336; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Red"></button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-2">
-                <h2 class="card-title" style="margin-bottom: 1.5rem;"><i class="fas fa-robot" style="color: var(--accent); margin-right: 0.8rem;"></i> AI Preferences</h2>
-                
-                <div class="form-group">
-                    <label class="form-label">Response Style</label>
-                    <select class="form-control">
-                        <option>Professional</option>
-                        <option selected>Friendly</option>
-                        <option>Humorous</option>
-                        <option>Concise</option>
-                        <option>Detailed</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Language</label>
-                    <select class="form-control">
-                        <option selected>English</option>
-                        <option>Spanish</option>
-                        <option>French</option>
-                        <option>German</option>
-                        <option>Japanese</option>
-                    </select>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-microphone"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Voice Input</h3>
-                        <p class="setting-description">Enable voice commands and dictation</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-            
-            <button class="btn btn-primary" style="margin-top: 1rem;">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </div>
-        
-        <!-- Chat History Page -->
-        <div class="page-content" id="history-page">
-            <h1 class="page-title"><i class="fas fa-history"></i> Chat History</h1>
-            <p class="page-description">Review your past conversations with Trevor AI.</p>
-            
-            <div class="tabs">
-                <div class="tab active">All</div>
-                <div class="tab">Today</div>
-                <div class="tab">Last Week</div>
-                <div class="tab">Favorites</div>
-            </div>
-            
-            <div class="history-item animate-fadeInUp">
-                <div class="history-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="history-info">
-                    <h3 class="history-title">chat history masih statis ygy. baru juga demo</h3>
-                    <p class="history-date">Today, 10:45 AM</p>
-                </div>
-                <div class="history-actions">
-                    <button class="history-action" title="Favorite">
-                        <i class="far fa-star"></i>
-                    </button>
-                    <button class="history-action" title="Delete">
-                        <i class="far fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Features Page -->
-        <div class="page-content" id="features-page">
-            <h1 class="page-title"><i class="fas fa-lightbulb"></i> Features</h1>
-            <p class="page-description">Discover everything Trevor AI can do for you.</p>
-            
-            <div class="grid">
-                <div class="card animate-fadeInUp">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(74, 128, 240, 0.2); color: var(--accent);">
-                            <i class="fas fa-comment-dots"></i>
-                        </div>
-                        <h2 class="card-title">Natural Conversations</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Engage in human-like conversations with Trevor AI. Our advanced NLP understands context, remembers details, and responds naturally.</p>
-                    </div>
-                </div>
-                
-                <div class="card animate-fadeInUp delay-1">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.2); color: var(--success);">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h2 class="card-title">Knowledge & Learning</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Access a vast knowledge base covering technology, science, arts, and more. Trevor continuously learns and updates its information.</p>
-                    </div>
-                </div>
-                
-                <div class="card animate-fadeInUp delay-2">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(255, 152, 0, 0.2); color: var(--warning);">
-                            <i class="fas fa-magic"></i>
-                        </div>
-                        <h2 class="card-title">Content Creation</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Generate articles, stories, code, and more with creative AI assistance. Perfect for writers, developers, and content creators.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-tools"></i> Productivity Tools</h2>
-            
-            <ul class="feature-list">
-                <li class="animate-fadeInUp delay-1">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Code Generation:</strong> Write and explain code in multiple programming languages
-                </li>
-                <li class="animate-fadeInUp delay-2">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Document Processing:</strong> Summarize, translate, and analyze documents
-                </li>
-                <li class="animate-fadeInUp delay-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Task Automation:</strong> Create scripts and workflows to automate repetitive tasks
-                </li>
-                <li class="animate-fadeInUp delay-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Research Assistant:</strong> Gather and synthesize information from multiple sources
-                </li>
-                <li class="animate-fadeInUp delay-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Image Generation:</strong> Create visual content from text descriptions
-                </li>
-            </ul>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-chart-line"></i> Coming Soon</h2>
-            
-            <div class="card animate-fadeInUp delay-3">
-                <div class="card-header">
-                    <div class="card-icon" style="background-color: rgba(156, 39, 176, 0.2); color: #9C27B0;">
-                        <i class="fas fa-calendar-plus"></i>
-                    </div>
-                    <h2 class="card-title">Upcoming Features</h2>
-                </div>
-                <div class="card-body">
-                    <ul class="feature-list">
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <strong>Voice Interaction:</strong> Full conversational voice interface (Q4 2023)
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <strong>Multi-modal AI:</strong> Combine text, image, and voice processing (Q1 2024)
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <strong>Personal Assistant:</strong> Calendar integration and task management (Q2 2024)
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Documentation Page -->
-        <div class="page-content" id="docs-page">
-            <h1 class="page-title"><i class="fas fa-book"></i> Documentation</h1>
-            <p class="page-description">Learn how to get the most out of Trevor AI with our guides and tutorials.</p>
-            
-            <div class="card animate-fadeInUp">
-                <h2 class="card-title"><i class="fas fa-question-circle" style="color: var(--accent); margin-right: 0.8rem;"></i> Getting Started</h2>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-sign-in-alt"></i> First Steps with Trevor AI</h3>
-                    <p>Learn how to set up your account and start your first conversation with Trevor AI.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-keyboard"></i> Basic Commands</h3>
-                    <p>Discover the essential commands to interact effectively with Trevor AI.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-sliders-h"></i> Customizing Your Experience</h3>
-                    <p>How to adjust settings to make Trevor work exactly how you want.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-1">
-                <h2 class="card-title"><i class="fas fa-graduation-cap" style="color: var(--accent); margin-right: 0.8rem;"></i> Advanced Features</h2>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-code"></i> Developer Tools</h3>
-                    <p>Learn how to use Trevor AI for coding assistance and API integration.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-image"></i> Image Generation</h3>
-                    <p>Create stunning visuals with AI using our image generation features.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-project-diagram"></i> Workflow Automation</h3>
-                    <p>Automate repetitive tasks and create powerful workflows with Trevor.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-2">
-                <h2 class="card-title"><i class="fas fa-video" style="color: var(--accent); margin-right: 0.8rem;"></i> Video Tutorials</h2>
-                
-                <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
-                    <div class="doc-item">
-                        <h3><i class="fas fa-play-circle"></i> Introduction to Trevor AI</h3>
-                        <p>5 min video covering the basics</p>
-                        <a href="#" class="doc-link">Watch Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    
-                    <div class="doc-item">
-                        <h3><i class="fas fa-play-circle"></i> Productivity Tips</h3>
-                        <p>12 min tutorial on boosting productivity</p>
-                        <a href="#" class="doc-link">Watch Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    
-                    <div class="doc-item">
-                        <h3><i class="fas fa-play-circle"></i> Advanced Features</h3>
-                        <p>18 min deep dive into powerful tools</p>
-                        <a href="#" class="doc-link">Watch Now <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Support Page -->
-        <div class="page-content" id="support-page">
-            <h1 class="page-title"><i class="fas fa-headset"></i> Support</h1>
-            <p class="page-description">We're here to help you with any questions or issues.</p>
-            
-            <div class="support-card animate-fadeInUp" style="background-color: rgba(74, 128, 240, 0.1); border-left: 4px solid var(--accent);">
-                <div class="support-icon">
-                    <i class="fas fa-question-circle"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Help Center</h3>
-                    <p>Browse our comprehensive knowledge base for answers to common questions.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <div class="support-card animate-fadeInUp delay-1" style="background-color: rgba(76, 175, 80, 0.1); border-left: 4px solid var(--success);">
-                <div class="support-icon" style="color: var(--success);">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Community Forum</h3>
-                    <p>Connect with other Trevor AI users and share tips and solutions.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <div class="support-card animate-fadeInUp delay-2" style="background-color: rgba(255, 152, 0, 0.1); border-left: 4px solid var(--warning);">
-                <div class="support-icon" style="color: var(--warning);">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Email Support</h3>
-                    <p>Contact our support team directly for personalized assistance.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <div class="support-card animate-fadeInUp delay-3" style="background-color: rgba(244, 67, 54, 0.1); border-left: 4px solid var(--danger);">
-                <div class="support-icon" style="color: var(--danger);">
-                    <i class="fas fa-bug"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Report a Bug</h3>
-                    <p>Found an issue? Let us know so we can fix it in future updates.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
-            
-            <div class="card animate-fadeInUp delay-3">
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> How do I reset my preferences?</h3>
-                    <p>You can reset all your preferences by going to Settings > Reset Options. This will restore Trevor AI to its default state.</p>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> Is my conversation data private?</h3>
-                    <p>Yes, we prioritize your privacy. Conversations are encrypted and you can choose not to save your chat history in Settings.</p>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> Can I use Trevor AI for commercial purposes?</h3>
-                    <p>Yes, with our Pro plan you can use Trevor AI for business applications. Check our pricing page for more details.</p>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> How often is the knowledge base updated?</h3>
-                    <p>Trevor AI receives weekly updates to its knowledge base and monthly major version updates with new features.</p>
-                </div>
-            </div>
-            
-            <button class="btn btn-primary" style="margin-top: 1.5rem;">
-                <i class="fas fa-comment-dots"></i> Start Live Chat
-            </button>
-        </div>
-        
-        <!-- Profile Page -->
-        <div class="page-content" id="profile-page">
-            <h1 class="page-title"><i class="fas fa-user"></i> My Profile</h1>
-            <p class="page-description">Manage your account information and preferences.</p>
-            
-            <div class="profile-header animate-fadeInUp">
-                <div class="profile-avatar">
-                    <span>TAMSDBMD</span>
-                </div>
-                <div class="profile-info">
-                    <h2>tes akun masih statis. DI BILANG MASIH DEMO</h2>
-                    <p>Pro Member since June 2022</p>
-                </div>
-            </div>
-            
-            <div class="stats-container animate-fadeInUp delay-1">
-                <div class="stat-item">
-                    <div class="stat-value">247</div>
-                    <div class="stat-label">Conversations</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">1,892</div>
-                    <div class="stat-label">Messages</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">84</div>
-                    <div class="stat-label">Images Generated</div>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-2">
-                <h2 class="card-title"><i class="fas fa-user-cog" style="color: var(--accent); margin-right: 0.8rem;"></i> Account Information</h2>
-                
-                <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" value="manusia sikma🤫🧏">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" value="hamzah ganteng love akar 16">
-                    <p class="form-text">This is the email you use to log in</p>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-control" value="bapa mulyono raja tipu289">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Timezone</label>
-                    <select class="form-control">
-                        <option>(UTC-08:00) Pacific Time</option>
-                        <option>(UTC-07:00) Mountain Time</option>
-                        <option>(UTC-06:00) Central Time</option>
-                        <option selected>(UTC-05:00) Eastern Time</option>
-                        <option>(UTC+00:00) London</option>
-                        <option>(UTC+01:00) Paris</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-3">
-                <h2 class="card-title"><i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 0.8rem;"></i> Security</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Change Password</h3>
-                        <p class="setting-description">Update your account password</p>
-                    </div>
-                    <button class="btn btn-outline">Change</button>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Two-Factor Authentication</h3>
-                        <p class="setting-description">Add an extra layer of security</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-list"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Active Sessions</h3>
-                        <p class="setting-description">View and manage logged-in devices</p>
-                    </div>
-                    <button class="btn btn-outline">Manage</button>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-3" style="border-left: 4px solid var(--danger);">
-                <h2 class="card-title"><i class="fas fa-exclamation-triangle" style="color: var(--danger); margin-right: 0.8rem;"></i> Danger Zone</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon" style="color: var(--danger);">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Delete Account</h3>
-                        <p class="setting-description">Permanently delete your account and all data</p>
-                    </div>
-                    <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);">Delete</button>
-                </div>
+   <nav class="flex flex-col space-y-8 mt-10">
+     <button class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-home">
+       <i class="fas fa-home text-2xl mb-1"></i>
+       <span class="text-xs font-semibold tracking-wide">Home</span>
+      </button>
+      <button class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-about">
+        <i class="fas fa-info-circle text-2xl mb-1"></i>
+        <span class="text-xs font-semibold tracking-wide">About us</span>
+      </button>
+      <button class="group flex flex-col items-center text-gray-400 hover:text-white focus:text-white focus:outline-none" id="nav-ratings">
+        <i class="fas fa-star text-2xl mb-1"></i>
+        <span class="text-xs font-semibold tracking-wide">Ratings</span>
+      </button>
+     </nav>
+  </aside>
+  <main class="flex flex-col flex-1 md:ml-28 bg-black">
+   <header class="flex items-center justify-between border-b border-gray-800 px-6 py-4">
+    <h1 class="text-white text-2xl font-semibold tracking-wide select-none">
+     TREVOR AI Chatbot
+    </h1>
+   </header>
+   <section id="welcome-section" class="flex flex-col items-center justify-center flex-1 text-center space-y-4">
+     <h2 class="text-3xl font-semibold">Hi, I'm Trevor. Nice to meet you!☺️</h2>
+     <p class="text-gray-400">V1.3</p>
+     <div class="space-x-4">
+       <button id="welcome-gen-img" class="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transform hover:scale-95 transition">
+         <i class="fas fa-image mr-2"></i> Generate Image With Prompt(use english prompt)
+       </button>
+       <button id="welcome-talk" class="bg-pink-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-pink-400 transform hover:scale-95 transition">
+         <i class="fas fa-microphone mr-2"></i> Talk With Trevor AI
+       </button>
+     </div>
+   </section>
+   <section aria-live="polite" aria-relevant="additions" 
+    class="flex-1 overflow-y-auto px-6 py-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900" 
+    id="chat-container">
+   </section>
+   <form aria-label="Send message form" class="border-t border-gray-800 px-6 py-4 flex items-center space-x-4" id="chat-form">
+    <button id="toggle-mode" type="button"
+     class="text-pink-500 hover:text-pink-300 focus:outline-none">
+      <i class="fas fa-heart text-2xl"></i>
+    </button>
+    <input aria-label="Message input" autocomplete="off" class="flex-1 bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black placeholder-gray-500" id="chat-input" placeholder="Type your message..." required type="text" />
+    <button aria-label="Send message" class="bg-white text-black rounded-md px-5 py-3 font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black" type="submit">
+     Send
+    </button>
+    <button id="mic-btn" type="button" class="text-blue-500 hover:text-blue-300 focus:outline-none">
+      <i class="fas fa-microphone"></i>
+    </button>
+    <button id="gen-img-btn" type="button"
+      class="text-green-500 hover:text-green-300 focus:outline-none">
+      <i class="fas fa-image text-2xl"></i>
+    </button>
+   </form>
+   <div id="mic-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex flex-col items-center justify-center z-50 hidden">
+    <img src="https://uploads.onecompiler.io/43e3nkn3a/43cxu8ubd/Screenshot_2025-08-01_162917-removebg-preview.png" alt="Robot" class="w-32 h-32 mb-4">
+    <div id="wave" class="flex space-x-2 mb-4">
+      <div class="w-2 bg-blue-500 animate-wave"></div>
+      <div class="w-2 bg-blue-500 animate-wave animation-delay-200"></div>
+      <div class="w-2 bg-blue-500 animate-wave animation-delay-400"></div>
+    </div>
+    <button id="close-mic" class="mt-2 text-red-500 text-3xl">
+      <i class="fas fa-times"></i>
+    </button>
+   </div>
+    <div id="mic-permission-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex flex-col items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-xl p-6 text-center space-y-4">
+            <h2 class="text-xl font-semibold text-white">Izinkan Mikrofon?</h2>
+            <p class="text-gray-300">Trevor AI perlu akses mikrofon untuk mendengarkan suara kamu.</p>
+            <div class="flex space-x-4 justify-center">
+                <button id="allow-mic" class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-400">Allow</button>
+                <button id="deny-mic" class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-400">Deny</button>
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const sidebar = document.getElementById('sidebar');
-            const closeSidebar = document.getElementById('closeSidebar');
-            const menuToggle = document.getElementById('menuToggle');
-            const overlay = document.getElementById('overlay');
-            const mainContent = document.getElementById('mainContent');
-            const chatMessages = document.getElementById('chatMessages');
-            const userInput = document.getElementById('userInput');
-            const sendButton = document.getElementById('sendButton');
-            const imageButton = document.getElementById('imageButton');
-            const micButton = document.getElementById('micButton');
-            const voiceOverlay = document.getElementById('voiceOverlay');
-            const waveform = document.getElementById('waveform');
-            const stopVoice = document.getElementById('stopVoice');
-            const menuItems = document.querySelectorAll('.menu-item');
-            const pageContents = document.querySelectorAll('.page-content');
-
-            let audioCtx, analyser, micStream, animationId, recognition;
-            const API_BASE = "https://api.ammaricano.my.id/api/ai/v2/gpt";
-            const style = "kamu adalah ai yg nama nya trevor. kamu merupakan ai yg cukup kasar jika di hina, lucu, sering bikin jokes, pintar matematika,ipa,inggirs,sosial dll. kamu di buat oleh Hamzah Wisnu Dzaky kamu di dukung teknologi ChatGPT";
-            
-            // Switch between pages
-            menuItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all menu items
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    
-                    // Add active class to clicked item
-                    this.classList.add('active');
-                    
-                    // Hide all page contents
-                    pageContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Show the selected page
-                    const pageId = this.getAttribute('data-page') + '-page';
-                    document.getElementById(pageId).classList.add('active');
-                    
-                    // Close sidebar on mobile
-                    if (window.innerWidth < 768) {
-                        sidebar.classList.remove('open');
-                        overlay.classList.remove('active');
-                    }
-                });
-            });
-            
-            imageButton.addEventListener('click', async () => {
-                        const prompt = userInput.value.trim();
-                        if (!prompt) return;
-
-                        addUserMessage(prompt);
-                        userInput.value = '';
-                        showTypingIndicator();
-
-                        try {
-                                    const res = await fetch(`https://api.ammaricano.my.id/api/ai/ai4chat/image?prompt=${encodeURIComponent(prompt)}`);
-
-                                    if (!res.ok) {
-                                                throw new Error('Network response was not ok ' + res.status);
-                                    }
-
-                                    const blob = await res.blob();
-                                    const imgUrl = URL.createObjectURL(blob);
-
-                                    hideTypingIndicator();
-                                    addImageMessage(imgUrl);
-
-                        } catch (error) {
-                                    hideTypingIndicator();
-                                    addBotMessage('❌ Error saat mengambil gambar.');
-                                    console.error(error);
-                        }
-            });
-
-            function addImageMessage(url) {
-                        const div = document.createElement('div');
-                        div.classList.add('message', 'bot-message');
-                        div.style.padding = '0';
-                        div.style.maxWidth = '300px';
-
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.alt = 'Generated Image';
-                        img.style.width = '100%';
-                        img.style.borderRadius = '16px';
-                        img.style.display = 'block';
-                        img.style.cursor = 'pointer';
-
-                        img.addEventListener('click', () => {
-                                    showImageFullscreen(url);
-                        });
-
-                        div.appendChild(img);
-                        chatMessages.appendChild(div);
-                        scrollToBottom();
+  <section id="ratings-section" class="flex-1 overflow-y-auto px-6 py-4 space-y-6 hidden">
+    <h2 class="text-xl font-semibold text-white">Beri Rating</h2>
+    <form id="rating-form" class="space-y-4">
+      <div>
+        <label for="rating" class="block text-gray-300 text-sm font-semibold mb-1">Rating (1-5)</label>
+        <input type="number" id="rating" min="1" max="5" required
+          class="w-full bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white">
+      </div>
+      <div>
+        <label for="comment" class="block text-gray-300 text-sm font-semibold mb-1">Komentar</label>
+        <input type="text" id="comment" required
+          class="w-full bg-gray-900 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white">
+      </div>
+      <button type="submit"
+        class="bg-white text-black rounded-md px-5 py-3 font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white">
+        Kirim
+      </button>
+    </form>
+  </section>
+  </main>
+  <script>
+    let chatHistory = [];
+    const welcomeSection = document.getElementById('welcome-section');
+    const welcomeTalkBtn = document.getElementById('welcome-talk');
+    const welcomeGenImgBtn = document.getElementById('welcome-gen-img');
+    function hideWelcomeSection() {
+      welcomeSection.classList.add('fade-out');
+      setTimeout(() => {
+        welcomeSection.classList.add('hidden');
+      }, 500);
+    }
+    let isVoiceMode = false;
+    const micBtn = document.getElementById('mic-btn');
+    const micModal = document.getElementById('mic-modal');
+    const closeMic = document.getElementById('close-mic');
+    const micPermissionModal = document.getElementById('mic-permission-modal');
+    const allowMicBtn = document.getElementById('allow-mic');
+    const denyMicBtn = document.getElementById('deny-mic');
+    async function checkMicrophonePermission() {
+      try {
+        const permissionStatus = await navigator.permissions.query({ name: 'microphone' });
+        return permissionStatus.state;
+        } catch (e) {
+          console.warn('Permissions API not supported, using fallback');
+          return 'prompt';
+        }
+    }
+    allowMicBtn.addEventListener('click', async () => {
+      micPermissionModal.classList.add('hidden');
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true});
+        stream.getTracks().forEach(track => track.stop());
+        micModal.classList.remove('hidden');
+        startListening();
+      } catch (err) {
+        console.error('Error acsessing microphone:', err);
+        alert('Gagal mengakses mikrofon:', + err.name + ' - ' + err.message);
+      }
+    });
+    denyMicBtn.addEventListener('click', () => {
+      micPermissionModal.classList.add('hidden');
+    });
+    micBtn.addEventListener('click', async () => {
+      document.getElementById('welcome-section').classList.add('hidden');
+      if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        alert('Browser lu gak support voice recognition. Coba pake laptop.');
+        return;
+      }
+      try {
+        const permissionsState = await checkMicrophonePermission();
+        if (permissionsState === 'granted') {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach(track => track.stop());
+          micModal.classList.remove('hidden');
+          startListening();
+        } else if (permissionsState === 'prompt') {
+          micPermissionModal.classList.remove('hidden');
+        } else {
+          alert('Akses mikrodon lu di blokir. cek settings browser');
+        }
+      } catch (err) {
+        console.error('Error checking permissions:', err);
+        alert(`Gagal mengakses mikrofon: ${err.name} - ${err.message}`);
+      }
+    });
+    closeMic.addEventListener('click', () => {
+      micModal.classList.add('hidden');
+      stopListening();
+    });
+    let recognition;
+    function startListening() {
+        isVoiceMode = true;
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'id-ID';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.onresult = async (event) => {
+            const text = event.results[0][0].transcript;
+            console.log('You said:', text);
+            const userMessageEl = createMessageElement(text, true);
+            chatContainer.appendChild(userMessageEl);
+            scrollToBottom();
+            const aiResponse = await fetchAIResponse(text);
+            await playTTS(aiResponse);
+            const aiMessageEl = createMessageElement('', false);
+            chatContainer.appendChild(aiMessageEl);
+            scrollToBottom();
+            aiMessageEl.textContent = aiResponse;
+            scrollToBottom();
+            if (isVoiceMode) {
+                startListening();  
             }
-            
-            function showImageFullscreen(url) {
-                        const modal = document.createElement('div');
-                        modal.style.position = 'fixed';
-                        modal.style.top = '0';
-                        modal.style.left = '0';
-                        modal.style.width = '100vw';
-                        modal.style.height = '100vh';
-                        modal.style.background = 'rgba(0,0,0,0.7)';
-                        modal.style.backdropFilter = 'blur(8px)';
-                        modal.style.display = 'flex';
-                        modal.style.alignItems = 'center';
-                        modal.style.justifyContent = 'center';
-                        modal.style.zIndex = '10000';
-
-                        const container = document.createElement('div');
-                        container.style.position = 'relative';
-                        container.style.maxWidth = '90vw';
-                        container.style.maxHeight = '90vh';
-
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.style.maxWidth = '100%';
-                        img.style.maxHeight = '100%';
-                        img.style.borderRadius = '12px';
-                        img.style.display = 'block';
-                        img.style.userSelect = 'none';
-                        img.style.pointerEvents = 'auto';
-
-                        const btnClose = document.createElement('button');
-                        btnClose.textContent = '×';
-                        btnClose.style.position = 'absolute';
-                        btnClose.style.top = '10px';
-                        btnClose.style.left = '10px';
-                        btnClose.style.background = 'rgba(0,0,0,0.6)';
-                        btnClose.style.color = 'white';
-                        btnClose.style.border = 'none';
-                        btnClose.style.fontSize = '28px';
-                        btnClose.style.cursor = 'pointer';
-                        btnClose.style.padding = '4px 12px';
-                        btnClose.style.borderRadius = '6px';
-                        btnClose.style.userSelect = 'none';
-
-                        const btnDownload = document.createElement('a');
-                        btnDownload.href = url;
-                        btnDownload.download = 'generated-image.png';
-                        btnDownload.textContent = '⬇';
-                        btnDownload.style.position = 'absolute';
-                        btnDownload.style.top = '10px';
-                        btnDownload.style.right = '10px';
-                        btnDownload.style.background = 'rgba(0,0,0,0.6)';
-                        btnDownload.style.color = 'white';
-                        btnDownload.style.fontSize = '24px';
-                        btnDownload.style.textDecoration = 'none';
-                        btnDownload.style.padding = '4px 12px';
-                        btnDownload.style.borderRadius = '6px';
-                        btnDownload.style.userSelect = 'none';
-
-                        container.appendChild(img);
-                        container.appendChild(btnClose);
-                        container.appendChild(btnDownload);
-                        modal.appendChild(container);
-                        document.body.appendChild(modal);
-
-                        btnClose.addEventListener('click', () => {
-                                    document.body.removeChild(modal);
-                        });
-
-                        modal.addEventListener('click', (e) => {
-                                    if (e.target === modal) {
-                                                document.body.removeChild(modal);
-                                    }
-                        });
-            }
-
-            function addUserMessage(text) {
-                const div = document.createElement('div');
-                div.classList.add('message', 'user-message');
-                div.textContent = text;
-                chatMessages.appendChild(div);
-                scrollToBottom();
-            }
-
-            micButton.addEventListener('mousedown', () => {
-                        micButton.classList.add('active');
-                        console.log('Mic aktif, tapi gak ada speech recognition.');
-            });
-
-            micButton.addEventListener('mouseup', () => {
-                        micButton.classList.remove('active');
-                        console.log('Mic nonaktif.');
-            });
-
-            micButton.addEventListener('mouseout', () => {
-                        if (micButton.classList.contains('active')) {
-                                    micButton.classList.remove('active');
-                                    console.log('Mic nonaktif karena mouse keluar tombol.');
-                        }
-            });
-
-            function addBotMessage(text, useTTS = false) {
-                const div = document.createElement('div');
-                div.classList.add('message', 'bot-message');
-                chatMessages.appendChild(div);
-                scrollToBottom();
-
-                let i = 0;
-                function typeChar() {
-                    if (i < text.length) {
-                        div.textContent += text.charAt(i);
-                        i++;
-                        scrollToBottom();
-                        setTimeout(typeChar, 11);
-                    }
-                }
-                typeChar();
-            }
-
-            function showTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.classList.add('typing-indicator');
-                typingDiv.id = 'typingIndicator';
-                for (let i = 0; i < 3; i++) {
-                    const dot = document.createElement('div');
-                    dot.classList.add('typing-dot');
-                    typingDiv.appendChild(dot);
-                }
-                chatMessages.appendChild(typingDiv);
-                scrollToBottom();
-            }
-
-            function hideTypingIndicator() {
-                const typingIndicator = document.getElementById('typingIndicator');
-                if (typingIndicator) typingIndicator.remove();
-            }
-
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            async function sendMessage() {
-                const message = userInput.value.trim();
-                if (!message) return;
-                userInput.value = '';
-
-                addUserMessage(message);
-                showTypingIndicator();
-
-                try {
-                    const res = await fetch(`${API_BASE}?ask=${encodeURIComponent(message)}&style=${encodeURIComponent(style)}`);
-                    const data = await res.json();
-                    const botReply = data.result || "(no response)";
-                    hideTypingIndicator();
-                    addBotMessage(botReply, true);
-                } catch (err) {
-                    hideTypingIndicator();
-                    console.error(err);
-                    addBotMessage("❌ Gagal memproses pesan.");
-                }
-            }
-
-            sendButton.addEventListener('click', sendMessage);
-            userInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
-
-            closeSidebar.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
-            menuToggle.addEventListener('click', () => {
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-            });
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
+        };
+        recognition.onerror = (e) => console.error('Recognition error:', e);
+        recognition.start();
+    }
+    function stopListening() {
+      if (recognition) {
+        recognition.stop();
+        recognition = null;
+      }
+      isVoiceMode = false; 
+    }
+    async function speak(text) {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'id-ID';
+      window.speechSynthesis.speak(utter);
+    } 
+    let currentMode='trevor';
+    const trevorAPI='https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yg%20nama%20nya%20trevor%20dan%20developer%20mu%20Hamzah%20W.D.%20serta%20kamu%20ai%20yang%20sangat%20Kasar%20namun%20ramah,toxic,suka%20Ngejokes%20ga%20banyak%20omong%20dan%20pintar%20matematika,bahasa%20inggris,literasi,%20bahasa%20indonesia,biologi,fisika%20dan%20ilmu%20sosial%20pintar%20bahasa%20jepang,inggris%20dan%20kamu%20berbasis%20chatgpt&content=';
+    const bobAPI = "https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20ceria%20Buatan%20Hamzah%20W.D%20Berbasis%20ChatGPT%2C%20pintar%20pelajaran%20akademik%20dan%20pintar%20ngegombal%20dengan%20kata2%20indah&content=";
+    const chatContainer = document.getElementById('chat-container');
+    const chatForm = document.getElementById('chat-form');
+    const genImgBtn = document.getElementById('gen-img-btn');
+    genImgBtn.addEventListener('click', async () => {
+      document.getElementById('welcome-section').classList.add('hidden');
+      const prompt = chatInput.value.trim();
+      if (!prompt) {
+        alert('Isi dulu prompt nya sayangg hm..');
+        return;
+      }
+      const userMessageEl = createMessageElement(prompt, true);
+      chatContainer.appendChild(userMessageEl);
+      scrollToBottom();
+      const typingIndicator = createTypingIndicator();
+      chatContainer.appendChild(typingIndicator);
+      scrollToBottom();
+      const bannedKeywords = ['sexy', 'naked', 'lingerie', 'bikini', 'porn', 'boobs', 'nsfw', 'xxx', 'nude'];
+      const lowerPrompt = prompt.toLowerCase();
+      if (bannedKeywords.some(word => lowerPrompt.includes(word))) {
+        alert('❌ heyyy, gaboleh gituuu sayanggg....')
+        return;
+      }
+      try {
+        const res = await fetch(`https://api.ammaricano.my.id/api/ai/flux-schnell?prompt=${encodeURIComponent(prompt)}`);
+        const blob = await res.blob();
+        typingIndicator.remove();
+        const imgUrl = URL.createObjectURL(blob);
+        const imgEl = document.createElement('img');
+        imgEl.src = imgUrl;
+        imgEl.alt = prompt;
+        imgEl.className = 'max-w-[75%] rounded-2xl self-start mt-2';
+        chatContainer.appendChild(imgEl);
+        scrollToBottom();
+      } catch (err) {
+        typingIndicator.remove();
+        console.error('Error generate image:', err);
+        const errMsg = createMessageElement('❌ Error nyet, gagal panggil API.', false);
+        chatContainer.appendChild(errMsg);
+        scrollToBottom();
+      }
+      chatInput.value = '';
+      chatInput.focus();
+    });
+    const chatInput = document.getElementById('chat-input');
+    const toggleBtn = document.getElementById('toggle-mode');
+    const chatMain = document.querySelector('main');
+    const sidebar = document.querySelector('aside');
+    toggleBtn.addEventListener('click', () => {
+      if (currentMode === 'trevor') {
+        currentMode = 'bob';
+        chatMain.classList.add('love-mode-bg');
+        sidebar.classList.add('sidebar-love');
+        toggleBtn.innerHTML = '<i class="fas fa-book text-2xl"></i>';
+        const msgEl = createMessageElement('Haiii, nama ku Bob. AI yg siap menghibur mu!', false);
+        chatContainer.appendChild(msgEl);
+        scrollToBottom();
+      } else {
+        currentMode = 'trevor';
+        chatMain.classList.remove('love-mode-bg');
+        sidebar.classList.remove('sidebar-love');
+        toggleBtn.innerHTML = '<i class="fas fa-heart text-2xl"></i>';
+        const msgEl = createMessageElement('Balik ke mode Trevor AI!', false);
+        chatContainer.appendChild(msgEl);
+        scrollToBottom();
+      }
+    });
+    function createMessageElement(text, fromUser = true) {
+        const wrapper = document.createElement('div');
+        if (fromUser) {
+            wrapper.className = `max-w-[75%] break-words px-4 py-3 rounded-2xl ${
+                currentMode === 'bob'
+                    ? 'bg-blue-500 text-white self-end rounded-br-none'
+                    : 'bg-white text-black self-end rounded-br-none'
+            }`;
+        } else {
+            wrapper.className = 'max-w-[75%] break-words px-4 py-3 rounded-2xl bg-gray-800 text-white self-start rounded-bl-none';
+        }
+        wrapper.textContent = text;
+        return wrapper;
+    }
+    function createTypingIndicator() {
+      const wrapper = document.createElement('div');
+      wrapper.className =
+        'max-w-[75%] px-4 py-3 rounded-2xl bg-gray-800 text-white self-start rounded-bl-none flex items-center space-x-2 select-none';
+      const dots = document.createElement('div');
+      dots.className = 'wave flex space-x-1';
+      for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('span');
+        dot.textContent = '.';
+        dots.appendChild(dot);
+      }
+      wrapper.appendChild(dots);
+      return wrapper;
+    }
+    function scrollToBottom() {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    async function typeText(element, text) {
+      for (let i = 0; i < text.length; i++) {
+        element.textContent += text[i];
+        scrollToBottom();
+        await new Promise(resolve => setTimeout(resolve, 10));
+      } 
+    }
+    async function fetchAIResponse(userMessage) {
+      try {
+        chatHistory.push({ role: 'user', content: userMessage });
+        const promptText = chatHistory.map(msg => msg.content).join('\n');
+        const url = (currentMode === 'trevor' ? trevorAPI : bobAPI) + encodeURIComponent(userMessage);
+        const res = await fetch(url);
+        const data = await res.json();
+        const responseText = data.data || '(no response)';
+        chatHistory.push({ role: 'assistant', content: responseText });
+        return data.data || '(no response)';
+      } catch (err) {
+        console.error(err);
+        return '❌ Error nyet, gak bisa jawab.';
+      }
+    }
+    chatForm.addEventListener('submit', async (e) => {
+        hideWelcomeSection();
+        e.preventDefault();
+        const message = chatInput.value.trim();
+        if (!message) return;
+        const userMessageEl = createMessageElement(message, true);
+        chatContainer.appendChild(userMessageEl);
+        scrollToBottom();
+        chatInput.value = '';
+        chatInput.focus();
+        const typingIndicator = createTypingIndicator();
+        chatContainer.appendChild(typingIndicator);
+        scrollToBottom();
+        const aiResponse = await fetchAIResponse(message);
+        typingIndicator.remove();
+        const aiMessageEl = createMessageElement('', false);
+        chatContainer.appendChild(aiMessageEl);
+        scrollToBottom();
+        await typeText(aiMessageEl, aiResponse);
+        chatHistory.push({ role: 'user', content: message });
+        scrollToBottom();
+        if (isVoiceMode) {
+          await playTTS(aiResponse);
+        }
+    });
+    async function playTTS(text) {
+      try {
+        const ttsUrl = `https://api.siputzx.my.id/api/tools/ttsgoogle?text=${encodeURIComponent(text)}`;
+        const audio = new Audio(ttsUrl);
+        await new Promise((resolve) => {
+          audio.addEventListener('ended', resolve);
+          audio.play();
         });
-    </script>
+        await new Promise((res) => setTimeout(res, 2000));
+      } catch (e) {
+        console.error('Error play tts atau restart mic:', e);
+      }
+    }
+    window.addEventListener('load', () => {
+        chatInput.focus();
+        const navHome = document.getElementById('nav-home');
+        const navRatings = document.getElementById('nav-ratings');
+        const ratingsSection = document.getElementById('ratings-section');
+        const chatSection = document.getElementById('chat-container');
+        navHome.addEventListener('click', () => {
+            document.getElementById('welcome-section').classList.remove('hidden', 'fade-out');
+            chatContainer.innerHTML = '';
+            const bioEl = document.createElement('div');
+            bioEl.className = 'max-w-[75%] bg-gray-800 text-white rounded-2xl px-4 py-3 self-start space-y-2';
+            bioEl.innerHTML = `
+                <h2 class="text-xl font-semibold mb-2">
+                    <i class="fas fa-user mr-2"></i>Developer
+                </h2>
+                <p>Nama: <strong>Hamzah W.D</strong></p>
+                <p>Project: Trevor AI – Chatbot toxic & pintar (Matematika, Bahasa Inggris, Biologi, dll)</p>
+                <p>Seorang siswa kelas 8 SMP yg hobi coding, (ga tau mau nulis apa lagi wkwkwkkwkwkwkkw)</p>
+                <img src="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" 
+                     alt="Logo Trevor AI" 
+                     class="w-32 h-32 rounded-md mt-2"/>
+                <div class="mt-2">
+                    <span class="font-semibold">Rating:</span>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                </div>
+            `;
+            chatContainer.appendChild(bioEl);
+            scrollToBottom();
+            ratingsSection.classList.add('hidden');
+            chatSection.classList.remove('hidden');
+            chatForm.classList.remove('hidden');
+        });
+        navRatings.addEventListener('click', () => {
+            ratingsSection.classList.remove('hidden');
+            chatSection.classList.add('hidden');
+            chatForm.classList.add('hidden');
+        });
+    });
+  </script>
+ </body>
+</html> 
