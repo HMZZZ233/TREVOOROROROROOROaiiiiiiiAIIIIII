@@ -2,19 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https:/trevor-ai.vercel.app/" />
-    <meta property="og:title" content="TREVOR AI Chatbot" />
-    <meta property="og:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
-    <meta property="og:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://trevor-ai.vercel.app/" /> 
-    <meta name="twitter:title" content="TREVOR AI Chatbot" />
-    <meta name="twitter:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
-    <meta name="twitter:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-    <link rel="icon" href="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" type="image/png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trevor AI Chatbot</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -218,37 +207,34 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: calc(100% - 80px);
+            height: auto;
             position: relative;
-            padding: 0 1rem 1rem;
+            padding: 0 1rem 0.2rem;
+            flex-grow: 1;
         }
-
         .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            margin-bottom: 0.4rem;
-            border-radius: var(--border-radius);
-            background-color: var(--chat-bg);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--chat-bg);
+                flex: 1;
+                overflow-y: auto;
+                padding: 1rem;
+                padding-bottom: 0.3rem; /* jarak kecil bgt */
+                margin: 0;
+                border-radius: var(--border-radius);
+                background-color: var(--chat-bg);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                scrollbar-width: thin;
+                scrollbar-color: var(--accent) var(--chat-bg);
         }
-
         .chat-messages::-webkit-scrollbar {
             width: 6px;
         }
-
         .chat-messages::-webkit-scrollbar-track {
             background: var(--chat-bg);
             border-radius: 10px;
         }
-
         .chat-messages::-webkit-scrollbar-thumb {
             background-color: var(--accent);
             border-radius: 10px;
         }
-
         .message {
             margin-bottom: 1rem;
             padding: 0.8rem 1.2rem;
@@ -283,16 +269,20 @@
             margin-right: auto;
             border-bottom-left-radius: 4px;
         }
-
         .input-container {
-            display: flex;
-            padding: 0.8rem;
-            background-color: var(--input-bg);
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-            flex-shrink: 0;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                padding: 0.8rem;
+                background-color: var(--input-bg);
+                border-radius: 0;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+                flex-shrink: 0;
+                z-index: 100;
+                margin: 0;
         }
-
         .input-container input {
             flex: 1;
             background: transparent;
@@ -1178,6 +1168,29 @@
                     </div>
                 </div>
                 
+                <div class="card animate-fadeInUp delay-2">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: rgba(74, 128, 240, 0.2); color: var(--accent);">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h2 class="card-title">Sarah Chen <span class="badge badge-primary">Lead Developer</span></h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Software architect specializing in natural language processing and machine learning. Responsible for Trevor's core intelligence systems.</p>
+                    </div>
+                </div>
+                
+                <div class="card animate-fadeInUp delay-2">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: rgba(255, 152, 0, 0.2); color: var(--warning);">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h2 class="card-title">Marcus Lee <span class="badge badge-warning">UX Designer</span></h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Creates the beautiful and intuitive interfaces that make Trevor AI a joy to use. Focused on human-centered design principles.</p>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -1304,44 +1317,23 @@
             <button class="btn btn-primary" style="margin-top: 1rem;">
                 <i class="fas fa-save"></i> Save Changes
             </button>
-        </div>
-        
-        <!-- Chat History Page -->
         <div class="page-content" id="history-page">
             <h1 class="page-title"><i class="fas fa-history"></i> Chat History</h1>
             <p class="page-description">Review your past conversations with Trevor AI.</p>
-            
             <div class="tabs">
                 <div class="tab active">All</div>
                 <div class="tab">Today</div>
                 <div class="tab">Last Week</div>
                 <div class="tab">Favorites</div>
             </div>
-            
-            <div class="history-item animate-fadeInUp">
-                <div class="history-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="history-info">
-                    <h3 class="history-title">chat history masih statis ygy. baru juga demo</h3>
-                    <p class="history-date">Today, 10:45 AM</p>
-                </div>
-                <div class="history-actions">
-                    <button class="history-action" title="Favorite">
-                        <i class="far fa-star"></i>
-                    </button>
-                    <button class="history-action" title="Delete">
-                        <i class="far fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
+            <div id="historyList"></div>
+            <button class="btn btn-outline" style="margin-top: 1rem; width: 100%;">
+                <i class="fas fa-ellipsis-h"></i> Load More
+            </button>
         </div>
-        
-        <!-- Features Page -->
         <div class="page-content" id="features-page">
             <h1 class="page-title"><i class="fas fa-lightbulb"></i> Features</h1>
             <p class="page-description">Discover everything Trevor AI can do for you.</p>
-            
             <div class="grid">
                 <div class="card animate-fadeInUp">
                     <div class="card-header">
@@ -1592,10 +1584,10 @@
             
             <div class="profile-header animate-fadeInUp">
                 <div class="profile-avatar">
-                    <span>TAMSDBMD</span>
+                    <span>JD</span>
                 </div>
                 <div class="profile-info">
-                    <h2>tes akun masih statis. DI BILANG MASIH DEMO</h2>
+                    <h2>John Doe</h2>
                     <p>Pro Member since June 2022</p>
                 </div>
             </div>
@@ -1620,18 +1612,18 @@
                 
                 <div class="form-group">
                     <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" value="manusia sikma🤫🧏">
+                    <input type="text" class="form-control" value="John Doe">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" value="hamzah ganteng love akar 16">
+                    <input type="email" class="form-control" value="john.doe@example.com">
                     <p class="form-text">This is the email you use to log in</p>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Username</label>
-                    <input type="text" class="form-control" value="bapa mulyono raja tipu289">
+                    <input type="text" class="form-control" value="johndoe42">
                 </div>
                 
                 <div class="form-group">
@@ -1705,281 +1697,318 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const sidebar = document.getElementById('sidebar');
-            const closeSidebar = document.getElementById('closeSidebar');
-            const menuToggle = document.getElementById('menuToggle');
-            const overlay = document.getElementById('overlay');
-            const mainContent = document.getElementById('mainContent');
-            const chatMessages = document.getElementById('chatMessages');
-            const userInput = document.getElementById('userInput');
-            const sendButton = document.getElementById('sendButton');
-            const imageButton = document.getElementById('imageButton');
-            const micButton = document.getElementById('micButton');
-            const voiceOverlay = document.getElementById('voiceOverlay');
-            const waveform = document.getElementById('waveform');
-            const stopVoice = document.getElementById('stopVoice');
-            const menuItems = document.querySelectorAll('.menu-item');
-            const pageContents = document.querySelectorAll('.page-content');
-
-            let audioCtx, analyser, micStream, animationId, recognition;
-            const API_BASE = "https://api.ammaricano.my.id/api/ai/v2/gpt";
-            const style = "kamu adalah ai yg nama nya trevor.AI pribadi yang ingat semua obrolan sebelumnya. Kamu bisa nyambung cerita, ingat nama, konteks, dan detail penting. kamu merupakan ai yg cukup kasar jika di hina, lucu, sering bikin jokes, pintar matematika,ipa,inggirs,sosial dll. kamu di buat oleh Hamzah Wisnu Dzaky kamu di dukung teknologi ChatGPT";
-            let chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]')
-            // Switch between pages
-            menuItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all menu items
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    
-                    // Add active class to clicked item
-                    this.classList.add('active');
-                    
-                    // Hide all page contents
-                    pageContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Show the selected page
-                    const pageId = this.getAttribute('data-page') + '-page';
-                    document.getElementById(pageId).classList.add('active');
-                    
-                    // Close sidebar on mobile
-                    if (window.innerWidth < 768) {
-                        sidebar.classList.remove('open');
-                        overlay.classList.remove('active');
-                    }
-                });
-            });
-            
-            imageButton.addEventListener('click', async () => {
-                        const prompt = userInput.value.trim();
-                        if (!prompt) return;
-
-                        addUserMessage(prompt);
-                        userInput.value = '';
-                        showTypingIndicator();
-
-                        try {
-                                    const res = await fetch(`https://api.ammaricano.my.id/api/ai/ai4chat/image?prompt=${encodeURIComponent(prompt)}`);
-
-                                    if (!res.ok) {
-                                                throw new Error('Network response was not ok ' + res.status);
-                                    }
-
-                                    const blob = await res.blob();
-                                    const imgUrl = URL.createObjectURL(blob);
-
-                                    hideTypingIndicator();
-                                    addImageMessage(imgUrl);
-
-                        } catch (error) {
-                                    hideTypingIndicator();
-                                    addBotMessage('❌ Error saat mengambil gambar.');
-                                    console.error(error);
+                const sidebar = document.getElementById('sidebar');
+                const closeSidebar = document.getElementById('closeSidebar');
+                const menuToggle = document.getElementById('menuToggle');
+                const overlay = document.getElementById('overlay');
+                const chatMessages = document.getElementById('chatMessages');
+                const userInput = document.getElementById('userInput');
+                const sendButton = document.getElementById('sendButton');
+                const imageButton = document.getElementById('imageButton');
+                const micButton = document.getElementById('micButton');
+                const menuItems = document.querySelectorAll('.menu-item');
+                const pageContents = document.querySelectorAll('.page-content');
+                let chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]')
+                function renderHistory(filter = "all") {
+                                const historyContainer = document.getElementById('historyList');
+                                historyContainer.innerHTML = '';
+                                const chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+                                const now = new Date();
+                                let filteredHistory = chatHistory.filter(msg => {
+                                                const msgDate = new Date(msg.timestamp);
+                                                if (filter === "today") {
+                                                                return msgDate.toDateString() === now.toDateString();
+                                                }
+                                                if (filter === "lastweek") {
+                                                                return (now - msgDate) <= (7 * 24 * 60 * 60 * 1000);
+                                                }
+                                                if (filter === "favorites") {
+                                                                return msg.favorite;
+                                                }
+                                                return true; 
+                                });
+                                filteredHistory.forEach((msg, index) => {
+                                                const item = document.createElement('div');
+                                                item.className = 'history-item animate-fadeInUp';
+                                                const icon = document.createElement('div');
+                                                icon.className = 'history-icon';
+                                                icon.innerHTML = msg.sender === 'user'
+                                                                ? '<i class="fas fa-user"></i>'
+                                                                : '<i class="fas fa-robot"></i>';
+                                                const info = document.createElement('div');
+                                                info.className = 'history-info';
+                                                info.innerHTML = `
+                                                                <h3 class="history-title">${msg.text}</h3>
+                                                                <p class="history-date">${new Date(msg.timestamp).toLocaleString()}</p>
+                                                `;
+                                                const actions = document.createElement('div');
+                                                actions.className = 'history-actions';
+                                                actions.innerHTML = `
+                                                                <button class="history-action favorite-btn" data-index="${index}" title="Favorite">
+                                                                                <i class="${msg.favorite ? 'fas fa-star' : 'far fa-star'}"></i>
+                                                                </button>
+                                                                <button class="history-action delete-btn" data-index="${index}" title="Delete">
+                                                                                <i class="far fa-trash-alt"></i>
+                                                                </button>
+                                                `;
+                                                item.appendChild(icon);
+                                                item.appendChild(info);
+                                                item.appendChild(actions);
+                                                historyContainer.appendChild(item);
+                                });
+                                historyContainer.addEventListener('click', (e) => {
+                                                if (e.target.closest('.delete-btn')) {
+                                                                const idx = e.target.closest('button').dataset.index;
+                                                                chatHistory.splice(idx, 1);
+                                                                localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+                                                                renderHistory(filter);
+                                                }
+                                                if (e.target.closest('.favorite-btn')) {
+                                                                const idx = e.target.closest('button').dataset.index;
+                                                                chatHistory[idx].favorite = !chatHistory[idx].favorite;
+                                                                localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+                                                                renderHistory(filter);
+                                                }
+                                });
+                }
+                chatHistory.forEach(msg => {
+                        if (msg.sender === 'user') {
+                                addUserMessage(msg.text, false);
+                        } else {
+                                addBotMessage(msg.text, false);
                         }
-            });
-
-            function addImageMessage(url) {
-                        const div = document.createElement('div');
-                        div.classList.add('message', 'bot-message');
-                        div.style.padding = '0';
-                        div.style.maxWidth = '300px';
-
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.alt = 'Generated Image';
-                        img.style.width = '100%';
-                        img.style.borderRadius = '16px';
-                        img.style.display = 'block';
-                        img.style.cursor = 'pointer';
-
-                        img.addEventListener('click', () => {
-                                    showImageFullscreen(url);
+                });
+                function saveMessage(text, sender) {
+                        chatHistory.push({
+                            text,
+                            sender,
+                            timestamp: Date.now(),
+                            favorite: false
                         });
-
-                        div.appendChild(img);
+                        localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+                }
+                function addUserMessage(text, save = true) {
+                        const div = document.createElement('div');
+                        div.classList.add('message', 'user-message');
+                        div.textContent = text;
                         chatMessages.appendChild(div);
                         scrollToBottom();
-            }
-            
-            function showImageFullscreen(url) {
-                        const modal = document.createElement('div');
-                        modal.style.position = 'fixed';
-                        modal.style.top = '0';
-                        modal.style.left = '0';
-                        modal.style.width = '100vw';
-                        modal.style.height = '100vh';
-                        modal.style.background = 'rgba(0,0,0,0.7)';
-                        modal.style.backdropFilter = 'blur(8px)';
-                        modal.style.display = 'flex';
-                        modal.style.alignItems = 'center';
-                        modal.style.justifyContent = 'center';
-                        modal.style.zIndex = '10000';
-
-                        const container = document.createElement('div');
-                        container.style.position = 'relative';
-                        container.style.maxWidth = '90vw';
-                        container.style.maxHeight = '90vh';
-
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.style.maxWidth = '100%';
-                        img.style.maxHeight = '100%';
-                        img.style.borderRadius = '12px';
-                        img.style.display = 'block';
-                        img.style.userSelect = 'none';
-                        img.style.pointerEvents = 'auto';
-
-                        const btnClose = document.createElement('button');
-                        btnClose.textContent = '×';
-                        btnClose.style.position = 'absolute';
-                        btnClose.style.top = '10px';
-                        btnClose.style.left = '10px';
-                        btnClose.style.background = 'rgba(0,0,0,0.6)';
-                        btnClose.style.color = 'white';
-                        btnClose.style.border = 'none';
-                        btnClose.style.fontSize = '28px';
-                        btnClose.style.cursor = 'pointer';
-                        btnClose.style.padding = '4px 12px';
-                        btnClose.style.borderRadius = '6px';
-                        btnClose.style.userSelect = 'none';
-
-                        const btnDownload = document.createElement('a');
-                        btnDownload.href = url;
-                        btnDownload.download = 'generated-image.png';
-                        btnDownload.textContent = '⬇';
-                        btnDownload.style.position = 'absolute';
-                        btnDownload.style.top = '10px';
-                        btnDownload.style.right = '10px';
-                        btnDownload.style.background = 'rgba(0,0,0,0.6)';
-                        btnDownload.style.color = 'white';
-                        btnDownload.style.fontSize = '24px';
-                        btnDownload.style.textDecoration = 'none';
-                        btnDownload.style.padding = '4px 12px';
-                        btnDownload.style.borderRadius = '6px';
-                        btnDownload.style.userSelect = 'none';
-
-                        container.appendChild(img);
-                        container.appendChild(btnClose);
-                        container.appendChild(btnDownload);
-                        modal.appendChild(container);
-                        document.body.appendChild(modal);
-
-                        btnClose.addEventListener('click', () => {
-                                    document.body.removeChild(modal);
+                        if (save) saveMessage(text, 'user');
+                }
+                function addBotMessage(text, save = true) {
+                        const div = document.createElement('div');
+                        div.classList.add('message', 'bot-message');
+                        chatMessages.appendChild(div);
+                        scrollToBottom();
+                        let i = 0;
+                        function typeChar() {
+                                if (i < text.length) {
+                                        div.textContent += text.charAt(i);
+                                        i++;
+                                        scrollToBottom();
+                                        setTimeout(typeChar, 11);
+                                }
+                        }
+                        typeChar();
+                        if (save) saveMessage(text, 'bot');
+                }
+                function scrollToBottom() {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+                function showTypingIndicator() {
+                        const typingDiv = document.createElement('div');
+                        typingDiv.classList.add('typing-indicator');
+                        typingDiv.id = 'typingIndicator';
+                        for (let i = 0; i < 3; i++) {
+                                const dot = document.createElement('div');
+                                dot.classList.add('typing-dot');
+                                typingDiv.appendChild(dot);
+                        }
+                        chatMessages.appendChild(typingDiv);
+                        scrollToBottom();
+                }
+                function hideTypingIndicator() {
+                        const typingIndicator = document.getElementById('typingIndicator');
+                        if (typingIndicator) typingIndicator.remove();
+                }
+                const API_BASE = "https://api.ammaricano.my.id/api/ai/v2/gpt";
+                const style = "kamu adalah ai yg nama nya trevor. kamu merupakan ai yg cukup kasar jika di hina, lucu, sering bikin jokes, pintar matematika, ipa, inggris, sosial dll. kamu di buat oleh Hamzah Wisnu Dzaky, kamu di dukung teknologi ChatGPT";
+                async function sendMessage() {
+                        const message = userInput.value.trim();
+                        if (!message) return;
+                        userInput.value = '';
+                        addUserMessage(message);
+                        showTypingIndicator();
+                        try {
+                                const res = await fetch(`${API_BASE}?ask=${encodeURIComponent(message)}&style=${encodeURIComponent(style)}`);
+                                const data = await res.json();
+                                const botReply = data.result || "(no response)";
+                                hideTypingIndicator();
+                                addBotMessage(botReply);
+                        } catch (err) {
+                                hideTypingIndicator();
+                                console.error(err);
+                                addBotMessage("❌ Gagal memproses pesan.");
+                        }
+                }
+                sendButton.addEventListener('click', sendMessage);
+                userInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+                closeSidebar.addEventListener('click', () => {
+                        sidebar.classList.remove('open');
+                        overlay.classList.remove('active');
+                });
+                menuToggle.addEventListener('click', () => {
+                        sidebar.classList.add('open');
+                        overlay.classList.add('active');
+                });
+                overlay.addEventListener('click', () => {
+                        sidebar.classList.remove('open');
+                        overlay.classList.remove('active');
+                });
+                menuItems.forEach(item => {
+                        item.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                menuItems.forEach(i => i.classList.remove('active'));
+                                this.classList.add('active');
+                                pageContents.forEach(content => content.classList.remove('active'));
+                                const pageId = this.getAttribute('data-page') + '-page';
+                                document.getElementById(pageId).classList.add('active');
+                                if (window.innerWidth < 768) {
+                                        sidebar.classList.remove('open');
+                                        overlay.classList.remove('active');
+                                }
+                                if (this.getAttribute('data-page') === 'history') {
+                                    renderHistory();
+                                }
                         });
-
-                        modal.addEventListener('click', (e) => {
-                                    if (e.target === modal) {
-                                                document.body.removeChild(modal);
-                                    }
-                        });
-            }
-
-            function addUserMessage(text) {
-                const div = document.createElement('div');
-                div.classList.add('message', 'user-message');
-                div.textContent = text;
-                chatMessages.appendChild(div);
-                scrollToBottom();
-            }
-
-            micButton.addEventListener('mousedown', () => {
+                });
+                micButton.addEventListener('mousedown', () => {
                         micButton.classList.add('active');
                         console.log('Mic aktif, tapi gak ada speech recognition.');
-            });
-
-            micButton.addEventListener('mouseup', () => {
+                });
+                micButton.addEventListener('mouseup', () => {
                         micButton.classList.remove('active');
                         console.log('Mic nonaktif.');
-            });
-
-            micButton.addEventListener('mouseout', () => {
-                        if (micButton.classList.contains('active')) {
-                                    micButton.classList.remove('active');
-                                    console.log('Mic nonaktif karena mouse keluar tombol.');
-                        }
-            });
-
-            function addBotMessage(text, useTTS = false) {
-                const div = document.createElement('div');
-                div.classList.add('message', 'bot-message');
-                chatMessages.appendChild(div);
-                scrollToBottom();
-
-                let i = 0;
-                function typeChar() {
-                    if (i < text.length) {
-                        div.textContent += text.charAt(i);
-                        i++;
-                        scrollToBottom();
-                        setTimeout(typeChar, 11);
-                    }
+                });
+                micButton.addEventListener('mouseout', () => {
+                                if (micButton.classList.contains('active')) {
+                                                micButton.classList.remove('active');
+                                                console.log('Mic nonaktif karena mouse keluar tombol.');
+                                }
+                });
+                imageButton.addEventListener('click', async () => {
+                            const prompt = userInput.value.trim();
+                            if (!prompt) return;
+                            addUserMessage(prompt);
+                            userInput.value = '';
+                            showTypingIndicator();
+                            try {
+                                        const res = await fetch(`https://api.ammaricano.my.id/api/ai/ai4chat/image?prompt=${encodeURIComponent(prompt)}`);
+                                        if (!res.ok) {
+                                                    throw new Error('Network response was not ok ' + res.status);
+                                        }
+                                        const blob = await res.blob();
+                                        const imgUrl = URL.createObjectURL(blob);
+                                        hideTypingIndicator();
+                                        addImageMessage(imgUrl);
+                            } catch (error) {
+                                        hideTypingIndicator();
+                                        addBotMessage('❌ Error saat mengambil gambar.');
+                                        console.error(error);
+                            }
+                });
+                function addImageMessage(url) {
+                            const div = document.createElement('div');
+                            div.classList.add('message', 'bot-message');
+                            div.style.padding = '0';
+                            div.style.maxWidth = '300px';
+                            const img = document.createElement('img');
+                            img.src = url;
+                            img.alt = 'Generated Image';
+                            img.style.width = '100%';
+                            img.style.borderRadius = '16px';
+                            img.style.display = 'block';
+                            img.style.cursor = 'pointer';
+                            img.addEventListener('click', () => {
+                                        showImageFullscreen(url);
+                            });
+                            div.appendChild(img);
+                            chatMessages.appendChild(div);
+                            scrollToBottom();
                 }
-                typeChar();
-            }
-
-            function showTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.classList.add('typing-indicator');
-                typingDiv.id = 'typingIndicator';
-                for (let i = 0; i < 3; i++) {
-                    const dot = document.createElement('div');
-                    dot.classList.add('typing-dot');
-                    typingDiv.appendChild(dot);
+                function showImageFullscreen(url) {
+                            const modal = document.createElement('div');
+                            modal.style.position = 'fixed';
+                            modal.style.top = '0';
+                            modal.style.left = '0';
+                            modal.style.width = '100vw';
+                            modal.style.height = '100vh';
+                            modal.style.background = 'rgba(0,0,0,0.7)';
+                            modal.style.backdropFilter = 'blur(8px)';
+                            modal.style.display = 'flex';
+                            modal.style.alignItems = 'center';
+                            modal.style.justifyContent = 'center';
+                            modal.style.zIndex = '10000';
+                            const container = document.createElement('div');
+                            container.style.position = 'relative';
+                            container.style.maxWidth = '90vw';
+                            container.style.maxHeight = '90vh';
+                            const img = document.createElement('img');
+                            img.src = url;
+                            img.style.maxWidth = '100%';
+                            img.style.maxHeight = '100%';
+                            img.style.borderRadius = '12px';
+                            img.style.display = 'block';
+                            img.style.userSelect = 'none';
+                            img.style.pointerEvents = 'auto';
+                            const btnClose = document.createElement('button');
+                            btnClose.textContent = '×';
+                            btnClose.style.position = 'absolute';
+                            btnClose.style.top = '10px';
+                            btnClose.style.left = '10px';
+                            btnClose.style.background = 'rgba(0,0,0,0.6)';
+                            btnClose.style.color = 'white';
+                            btnClose.style.border = 'none';
+                            btnClose.style.fontSize = '28px';
+                            btnClose.style.cursor = 'pointer';
+                            btnClose.style.padding = '4px 12px';
+                            btnClose.style.borderRadius = '6px';
+                            btnClose.style.userSelect = 'none';
+                            const btnDownload = document.createElement('a');
+                            btnDownload.href = url;
+                            btnDownload.download = 'generated-image.png';
+                            btnDownload.textContent = '⬇';
+                            btnDownload.style.position = 'absolute';
+                            btnDownload.style.top = '10px';
+                            btnDownload.style.right = '10px';
+                            btnDownload.style.background = 'rgba(0,0,0,0.6)';
+                            btnDownload.style.color = 'white';
+                            btnDownload.style.fontSize = '24px';
+                            btnDownload.style.textDecoration = 'none';
+                            btnDownload.style.padding = '4px 12px';
+                            btnDownload.style.borderRadius = '6px';
+                            btnDownload.style.userSelect = 'none';
+                            container.appendChild(img);
+                            container.appendChild(btnClose);
+                            container.appendChild(btnDownload);
+                            modal.appendChild(container);
+                            document.body.appendChild(modal);
+                            btnClose.addEventListener('click', () => {
+                                        document.body.removeChild(modal);
+                            });
+                             modal.addEventListener('click', (e) => {
+                                         if (e.target === modal) {
+                                                     document.body.removeChild(modal);
+                                         }
+                             });
                 }
-                chatMessages.appendChild(typingDiv);
-                scrollToBottom();
-            }
-
-            function hideTypingIndicator() {
-                const typingIndicator = document.getElementById('typingIndicator');
-                if (typingIndicator) typingIndicator.remove();
-            }
-
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            async function sendMessage() {
-                const message = userInput.value.trim();
-                if (!message) return;
-                userInput.value = '';
-
-                addUserMessage(message);
-                showTypingIndicator();
-
-                try {
-                    const lastMessages = chatHistory.slice(-5).map(h => `${h.sender}: ${h.text}`).join(' | ');
-                    const fullMessage = `${lastMessages} | user: ${message}`;
-                    const res = await fetch(`${API_BASE}?ask=${encodeURIComponent(fullMessage)}&style=${encodeURIComponent(style)}`);
-                    const data = await res.json();
-                    const botReply = data.result || "(no response)";
-                    hideTypingIndicator();
-                    addBotMessage(botReply, true);
-                } catch (err) {
-                    hideTypingIndicator();
-                    console.error(err);
-                    addBotMessage("❌ Gagal memproses pesan.");
-                }
-            }
-
-            sendButton.addEventListener('click', sendMessage);
-            userInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
-
-            closeSidebar.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
-            menuToggle.addEventListener('click', () => {
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-            });
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
+                document.querySelectorAll('#history-page .tab').forEach(tab => {
+                                tab.addEventListener('click', () => {
+                                                document.querySelectorAll('#history-page .tab').forEach(t => t.classList.remove('active'));
+                                                tab.classList.add('active');
+                                                const filterType = tab.textContent.toLowerCase().replace(' ', '');
+                                                renderHistory(filterType);
+                                });
+                });
         });
     </script>
-
-
