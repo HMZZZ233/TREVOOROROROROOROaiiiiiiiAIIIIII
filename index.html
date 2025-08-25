@@ -1,1981 +1,1188 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https:/trevor-ai.vercel.app/" />
-    <meta property="og:title" content="TREVOR AI Chatbot" />
-    <meta property="og:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
-    <meta property="og:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://trevor-ai.vercel.app/" /> 
-    <meta name="twitter:title" content="TREVOR AI Chatbot" />
-    <meta name="twitter:description" content="TREVOR AI – Chatbot toxic & pintar bikinan Hamzah W.D" />
-    <meta name="twitter:image" content="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" />
-    <link rel="icon" href="https://uploads.onecompiler.io/43e3nkn3a/43s7mx4qc/Blue%20Abstract%20Illustrative%20Human%20Artificial%20Intelligence%20Technology%20Logo.png" type="image/png" />
-    <title>Trevor AI Chatbot</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trevor AI - Advanced AI Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        :root {
-            --primary-bg: #121212;
-            --secondary-bg: #1e1e1e;
-            --sidebar-bg: #0a0a0a;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent: #4a80f0;
-            --accent-light: #6a9eff;
-            --accent-dark: #2a60d0;
-            --chat-bg: #252525;
-            --input-bg: #2d2d2d;
-            --border-radius: 16px;
-            --sidebar-width: 280px;
-            --card-bg: #1a1a1a;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --danger: #f44336;
-        }
-        
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--primary-bg);
-            color: var(--text-primary);
+            background-color: #121212;
+            color: #e0e0e0;
+            height: 100vh;
             display: flex;
-            position: relative;
-        }
-
-        .liquid-bg {
-            position: fixed;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: radial-gradient(circle at center, var(--secondary-bg) 0%, var(--primary-bg) 70%);
-            opacity: 0.8;
-            z-index: -1;
-            animation: liquidMove 20s infinite alternate;
-        }
-
-        @keyframes liquidMove {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
-            100% {
-                transform: rotate(2deg) scale(1.05);
-            }
+            overflow: hidden;
         }
 
         /* Sidebar Styles */
         .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: var(--sidebar-width);
-            background-color: var(--sidebar-bg);
-            padding: 1.5rem 1rem;
-            z-index: 100;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-out;
-            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
-            overflow-y: auto;
+            width: 260px;
+            background-color: #1e1e1e;
+            height: 100vh;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #2d2d2d;
+            transition: all 0.3s ease;
         }
 
-        .sidebar.open {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #2d2d2d;
+            margin-bottom: 20px;
         }
 
-        .sidebar-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--accent);
+        .logo-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #6c63ff;
         }
 
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.2s;
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #6c63ff, #4fc3f7);
+            background-clip: text;          
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .close-sidebar:hover {
-            color: var(--text-primary);
+        .menu-items {
+            list-style: none;
+            padding: 0 15px;
+            flex-grow: 1;
         }
 
         .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: var(--border-radius);
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
+            background-color: #2d2d2d;
         }
 
         .menu-item.active {
-            background-color: var(--accent);
+            background-color: #6c63ff;
             color: white;
         }
 
-        .menu-item i {
-            margin-right: 1rem;
-            font-size: 1.1rem;
+        .menu-icon {
+            margin-right: 12px;
+            font-size: 18px;
             width: 24px;
             text-align: center;
         }
 
-        .menu-item span {
-            font-size: 0.95rem;
-            font-weight: 500;
+        .menu-text {
+            font-size: 15px;
+        }
+
+        .footer {
+            padding: 15px 20px;
+            border-top: 1px solid #2d2d2d;
+            font-size: 12px;
+            color: #888;
         }
 
         /* Main Content Styles */
         .main-content {
-            flex: 1;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            transition: margin-left 0.3s ease-out;
+            height: 100vh;
+            position: relative;
         }
 
-        .header {
+        .top-bar {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px;
+            border-bottom: 1px solid #2d2d2d;
+            background-color: #1a1a1a;
+        }
+
+        .model-selector {
+            position: relative;
             display: flex;
             align-items: center;
-            padding: 1.5rem;
-            background-color: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 10;
-            flex-shrink: 0;
-        }
-
-        .menu-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            margin-right: 1.5rem;
+            background-color: #2d2d2d;
+            padding: 8px 15px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.2s;
+            user-select: none;
         }
 
-        .menu-toggle:hover {
-            transform: scale(1.1);
+        .model-icon {
+            margin-right: 8px;
+            color: #6c63ff;
         }
 
-        .header-info {
-            flex: 1;
+        .model-text {
+            font-size: 14px;
+            margin-right: 5px;
         }
 
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            background: linear-gradient(90deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .header p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: calc(100% - 80px);
-            position: relative;
-            padding: 0 1rem 1rem;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            margin-bottom: 0.4rem;
-            border-radius: var(--border-radius);
-            background-color: var(--chat-bg);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--chat-bg);
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: var(--chat-bg);
-            border-radius: 10px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background-color: var(--accent);
-            border-radius: 10px;
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 0.8rem 1.2rem;
-            border-radius: var(--border-radius);
-            max-width: 80%;
-            line-height: 1.5;
-            position: relative;
-            animation: fadeIn 0.3s ease-out;
-            word-wrap: break-word;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .user-message {
-            background-color: var(--accent);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
-        }
-
-        .bot-message {
-            background-color: var(--input-bg);
-            margin-right: auto;
-            border-bottom-left-radius: 4px;
-        }
-
-        .input-container {
-            display: flex;
-            padding: 0.8rem;
-            background-color: var(--input-bg);
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-            flex-shrink: 0;
-        }
-
-        .input-container input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            padding: 0.8rem;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .input-container input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .action-button {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .action-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-        }
-
-        .action-button.active {
-            color: var(--accent);
-        }
-
-        .typing-indicator {
-            display: flex;
-            padding: 0.8rem 1.2rem;
-            background-color: var(--input-bg);
-            border-radius: var(--border-radius);
-            margin-right: auto;
-            margin-bottom: 1rem;
-            border-bottom-left-radius: 4px;
-            width: fit-content;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--text-secondary);
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typingAnimation 1.4s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingAnimation {
-            0%, 60%, 100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
+        /* Model Selector Dropdown */
+        .model-dropdown-menu {
+            position: absolute;
+            top: 100%;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 50;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* Page Content Styles */
-        .page-content {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
+            width: 200px;
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             display: none;
-        }
-
-        .page-content.active {
-            display: block;
-        }
-
-        .page-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-        }
-
-        .page-title i {
-            margin-right: 1rem;
-            color: var(--accent);
-        }
-
-        .page-description {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        /* Card Styles */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .card-body {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Grid Layout */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Feature List */
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-        }
-
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
-
-        .feature-list i {
-            color: var(--accent);
-            margin-right: 1rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        /* Settings Styles */
-        .setting-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .setting-item:last-child {
-            border-bottom: none;
-        }
-
-        .setting-icon {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(74, 128, 240, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .setting-info {
-            flex: 1;
-        }
-
-        .setting-title {
-            font-weight: 500;
-            margin-bottom: 0.2rem;
-        }
-
-        .setting-description {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--accent);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        /* Profile Styles */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1.5rem;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            position: relative;
+            z-index: 1000;
             overflow: hidden;
         }
 
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .model-dropdown-menu.show {
+            display: block;
         }
 
-        .profile-info h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .profile-info p {
-            color: var(--text-secondary);
-        }
-
-        .stats-container {
+        .model-option {
+            padding: 12px 15px;
             display: flex;
-            margin: 1.5rem 0;
+            align-items: center;
+            transition: all 0.2s ease;
         }
 
-        .stat-item {
-            flex: 1;
+        .model-option:hover {
+            background-color: #3d3d3d;
+        }
+
+        .model-option i {
+            margin-right: 10px;
+            width: 20px;
             text-align: center;
-            padding: 1rem;
         }
 
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Support Styles */
-        .support-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-
-        .support-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .support-icon {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(74, 128, 240, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1.5rem;
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        .support-info h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        .support-info p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Documentation Styles */
-        .doc-item {
-            margin-bottom: 1.5rem;
-            border-left: 3px solid var(--accent);
-            padding-left: 1rem;
-        }
-
-        .doc-item h3 {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .doc-item h3 i {
-            margin-right: 0.8rem;
-            color: var(--accent);
-        }
-
-        .doc-item p {
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .doc-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .doc-link i {
-            margin-left: 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        /* Chat History Styles */
-        .history-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            background-color: var(--card-bg);
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .history-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .history-icon {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(74, 128, 240, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .history-info {
-            flex: 1;
-        }
-
-        .history-title {
-            font-weight: 500;
-            margin-bottom: 0.2rem;
-        }
-
-        .history-date {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .history-actions {
-            display: flex;
-        }
-
-        .history-action {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            margin-left: 0.5rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .history-action:hover {
-            color: var(--text-primary);
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-
-        .badge-primary {
-            background-color: rgba(74, 128, 240, 0.2);
-            color: var(--accent);
-        }
-
-        .badge-success {
-            background-color: rgba(76, 175, 80, 0.2);
-            color: var(--success);
-        }
-
-        .badge-warning {
-            background-color: rgba(255, 152, 0, 0.2);
-            color: var(--warning);
-        }
-
-        .badge-danger {
-            background-color: rgba(244, 67, 54, 0.2);
-            color: var(--danger);
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.7rem 1.2rem;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            outline: none;
-        }
-
-        .btn i {
-            margin-right: 0.5rem;
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
+        .model-option.active {
+            background-color: #6c63ff;
             color: white;
         }
 
-        .btn-primary:hover {
-            background-color: var(--accent-light);
+        .chat-container {
+            flex-grow: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
-        .btn-outline {
-            background-color: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
+        .welcome-message {
+            text-align: center;
+            margin: auto;
+            max-width: 800px;
         }
 
-        .btn-outline:hover {
-            background-color: rgba(74, 128, 240, 0.1);
+        .welcome-title {
+            font-size: 36px;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #6c63ff, #4fc3f7);
+            background-clip: text;       
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
 
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 1.5rem;
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
         }
 
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+        .feature-box {
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 1px solid #2d2d2d;
         }
 
-        .form-control {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: var(--input-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: border-color 0.2s;
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .form-control:focus {
-            border-color: var(--accent);
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #6c63ff;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #aaa;
+            text-align: center;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-top: 1px solid #2d2d2d;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: #2d2d2d;
+            border-radius: 24px;
+            padding: 5px 15px;
+        }
+
+        .pin-icon, .image-icon {
+            font-size: 18px;
+            color: #888;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            padding: 15px 10px;
+            color: #e0e0e0;
+            font-size: 16px;
             outline: none;
         }
 
-        .form-text {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.3rem;
+        .chat-input::placeholder {
+            color: #888;
         }
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        .tab {
-            padding: 0.8rem 1.5rem;
+        .send-button, .mic-button {
+            background: transparent;
+            border: none;
             cursor: pointer;
+            font-size: 20px;
+            color: #6c63ff;
+            padding: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .send-button:hover, .mic-button:hover {
+            color: #4fc3f7;
+        }
+
+        /* Chat bubbles */
+        .message {
+            max-width: 70%;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 18px;
+            line-height: 1.5;
             position: relative;
-            color: var(--text-secondary);
-            font-weight: 500;
         }
 
-        .tab.active {
-            color: var(--accent);
+        .user-message {
+            background-color: #6c63ff;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
         }
 
-        .tab.active:after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: var(--accent);
+        .ai-message {
+            background-color: #2d2d2d;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .message-time {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            text-align: right;
         }
 
-        .animate-fadeInUp {
-            animation: fadeInUp 0.5s ease-out forwards;
+        .loading-dots {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+            align-items: center;
         }
 
-        .delay-1 {
-            animation-delay: 0.1s;
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #6c63ff;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0.6); }
+            40% { transform: scale(1); }
         }
 
-        .delay-2 {
-            animation-delay: 0.2s;
+        /* Formatting styles */
+        .message-text strong {
+            font-weight: 700;
+            color: #fff;
         }
 
-        .delay-3 {
-            animation-delay: 0.3s;
+        .message-text em {
+            font-style: italic;
+            color: #ccc;
         }
 
-        /* Responsive Styles */
+        .message-text u {
+            text-decoration: underline;
+        }
+
+        .message-text code {
+            background-color: #3d3d3d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #6c63ff;
+        }
+
+        .message-text a {
+            color: #4fc3f7;
+            text-decoration: none;
+        }
+
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+
+        .message-text h1, .message-text h2, .message-text h3 {
+            margin: 15px 0 10px 0;
+            color: #fff;
+        }
+
+        .message-text ul, .message-text ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .message-text li {
+            margin-bottom: 5px;
+        }
+
+        .message-text blockquote {
+            border-left: 3px solid #6c63ff;
+            padding-left: 15px;
+            margin: 10px 0;
+            color: #ccc;
+        }
+
+        /* Math formatting */
+        .message-text .math-section {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 3px solid #4fc3f7;
+            background-color: #252525;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .message-text .math-title {
+            font-weight: 600;
+            color: #4fc3f7;
+            margin-bottom: 10px;
+        }
+
+        .message-text .math-expression {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .message-text .math-solution {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border-radius: 5px;
+        }
+
+        .message-text .math-step {
+            margin: 5px 0;
+            padding-left: 15px;
+            border-left: 2px solid #6c63ff;
+        }
+
+        /* MJX math styling */
+        .message-text mjx-container {
+            display: inline-block;
+            margin: 5px 0;
+            color: #fff;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .message-text .math-block {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            :root {
-                --sidebar-width: 260px;
+            .sidebar {
+                width: 70px;
             }
             
-            .chat-container {
-                padding: 0 0.5rem 0.5rem;
-                height: calc(100% - 70px);
+            .menu-text, .logo-text {
+                display: none;
             }
             
-            .header {
-                padding: 1rem;
+            .menu-icon {
+                margin-right: 0;
+                font-size: 20px;
             }
             
-            .header h1 {
-                font-size: 1.3rem;
+            .menu-item {
+                justify-content: center;
+                padding: 15px;
             }
             
-            .message {
-                max-width: 90%;
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .input-container {
-                padding: 0.6rem;
-            }
-            
-            .action-button {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-            }
-
-            .page-content {
-                padding: 1.5rem 1rem;
-            }
-
-            .page-title {
-                font-size: 1.5rem;
-            }
-
-            .grid {
+            .features {
                 grid-template-columns: 1fr;
             }
 
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
+            .model-dropdown-menu {
+                width: 180px;
+                right: 0;
+                left: auto;
             }
-
-            .profile-avatar {
-                margin-right: 0;
-                margin-bottom: 1rem;
+            
+            .message {
+                max-width: 85%;
             }
-
-            .stats-container {
-                flex-direction: column;
-            }
-
-            .stat-item {
-                padding: 0.5rem;
-            }
-        }
-        .image-modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.95);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                flex-direction: column;
-        }
-
-        .image-modal img {
-                max-width: 90%;
-                max-height: 80%;
-                border-radius: 12px;
-                box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-        }
-
-        .image-modal .modal-controls {
-                position: absolute;
-                top: 20px;
-                width: 100%;
-                padding: 0 30px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-        }
-
-        .image-modal button {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 1.8rem;
-                cursor: pointer;
-                transition: 0.2s;
-        }
-
-        .image-modal button:hover {
-                color: var(--accent);
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.9; }
-        }
-        .voice-overlay {
-            display: flex;
         }
     </style>
 </head>
 <body>
-    <div id="voiceOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:#000000dd; z-index:9999; align-items:center; justify-content:center; flex-direction:column;" class="voice-overlay">
-        <img src="https://cdn-icons-png.flaticon.com/512/4829/4829581.png" alt="Trevor Logo" style="width:100px; height:100px; animation:pulse 1s infinite;">
-        <canvas id="waveform" width="320" height="80" style="margin: 20px 0;"></canvas>
-        <button id="stopVoice" style="background:red; border:none; padding:14px 16px; border-radius:50%; cursor:pointer; color:white; font-size:20px;">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>    
-    <div class="liquid-bg"></div>
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h2>Trevor AI</h2>
-            <button class="close-sidebar" id="closeSidebar">
-                <i class="fas fa-times"></i>
-            </button>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-robot"></i></div>
+            <div class="logo-text">Trevor AI</div>
         </div>
-        <a href="#" class="menu-item active" data-page="home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="#" class="menu-item" data-page="about">
-            <i class="fas fa-info-circle"></i>
-            <span>About Us</span>
-        </a>
-        <a href="#" class="menu-item" data-page="settings">
-            <i class="fas fa-cog"></i>
-            <span>Settings</span>
-        </a>
-        <a href="#" class="menu-item" data-page="history">
-            <i class="fas fa-history"></i>
-            <span>Chat History</span>
-        </a>
-        <a href="#" class="menu-item" data-page="features">
-            <i class="fas fa-lightbulb"></i>
-            <span>Features</span>
-        </a>
-        <a href="#" class="menu-item" data-page="docs">
-            <i class="fas fa-book"></i>
-            <span>Documentation</span>
-        </a>
-        <a href="#" class="menu-item" data-page="support">
-            <i class="fas fa-headset"></i>
-            <span>Support</span>
-        </a>
-        <a href="#" class="menu-item" data-page="profile">
-            <i class="fas fa-user"></i>
-            <span>Profile</span>
-        </a>
+        
+        <ul class="menu-items">
+            <li class="menu-item active">
+                <div class="menu-icon"><i class="fas fa-plus"></i></div>
+                <div class="menu-text">New Chat</div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-icon"><i class="fas fa-history"></i></div>
+                <div class="menu-text">Chat History</div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-icon"><i class="fas fa-calculator"></i></div>
+                <div class="menu-text">Math Assistant</div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-icon"><i class="fas fa-book"></i></div>
+                <div class="menu-text">Knowledge Base</div>
+            </li>
+            <li class="menu-item">
+                <div class="menu-icon"><i class="fas fa-cog"></i></div>
+                <div class="menu-text">Settings</div>
+            </li>
+        </ul>
+        
+        <div class="footer">
+            <p>© 2025 Trevor AI. All rights reserved.</p>
+            <p>Version 2.5.1</p>
+        </div>
     </div>
-    <div class="overlay" id="overlay"></div>
-    <div class="main-content" id="mainContent">
-        <div class="header">
-            <button class="menu-toggle" id="menuToggle">
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="menu-toggle">
                 <i class="fas fa-bars"></i>
-            </button>
-            <div class="header-info">
-                <h1>Trevor AI</h1>
-                <p>Your intelligent assistant ready to help with any questions</p>
-            </div>
-        </div> 
-        
-        <!-- Home Page -->
-        <div class="page-content active" id="home-page">
-            <div class="chat-container">
-                <div class="chat-messages" id="chatMessages">
-                </div>
-                <div class="input-container">
-                    <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
-                    <button class="action-button" id="imageButton" title="Attach image">
-                        <i class="fas fa-image"></i>
-                    </button>
-                    <button class="action-button" id="micButton" title="Voice input">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <button class="action-button" id="sendButton" title="Send message">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- About Us Page -->
-        <div class="page-content" id="about-page">
-            <h1 class="page-title"><i class="fas fa-info-circle"></i> About Trevor AI</h1>
-            <p class="page-description">Learn more about our mission, vision, and the team behind this revolutionary AI assistant.</p>
-            
-            <div class="card animate-fadeInUp">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h2 class="card-title">Our Mission</h2>
-                </div>
-                <div class="card-body">
-                    <p>At Trevor AI, we're dedicated to creating intelligent, intuitive, and accessible AI technology that enhances human productivity and creativity. Our mission is to democratize AI assistance, making cutting-edge technology available to everyone.</p>
-                </div>
             </div>
             
-            <div class="card animate-fadeInUp delay-1">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h2 class="card-title">Our Vision</h2>
-                </div>
-                <div class="card-body">
-                    <p>We envision a future where AI seamlessly integrates with daily life, augmenting human capabilities without replacing the human touch. Trevor AI is designed to be your digital companion - helpful, intelligent, and always learning.</p>
-                </div>
-            </div>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-users"></i> Meet the Team</h2>
-            
-            <div class="grid">
-                <div class="card animate-fadeInUp delay-2">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.2); color: var(--success);">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h2 class="card-title">Hamzah Wisnu Dzaky <span class="badge badge-success">Founder</span></h2>
-                    </div>
-                    <div class="card-body">
-                        <p>The visionary behind Trevor AI, with over 10 years of experience in AI research and development. Passionate about creating technology that makes a difference.</p>
-                    </div>
-                </div>
+            <div class="model-selector" id="modelSelector">
+                <div class="model-icon"><i class="fas fa-brain"></i></div>
+                <div class="model-text">Trevor AI 2.5</div>
+                <div class="model-dropdown"><i class="fas fa-chevron-down"></i></div>
                 
-            </div>
-        </div>
-        
-        <!-- Settings Page -->
-        <div class="page-content" id="settings-page">
-            <h1 class="page-title"><i class="fas fa-cog"></i> Settings</h1>
-            <p class="page-description">Customize your Trevor AI experience to suit your preferences.</p>
-            
-            <div class="card animate-fadeInUp">
-                <h2 class="card-title" style="margin-bottom: 1.5rem;"><i class="fas fa-user-shield" style="color: var(--accent); margin-right: 0.8rem;"></i> Privacy & Security</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-history"></i>
+                <div class="model-dropdown-menu">
+                    <div class="model-option active" data-model="trevor-2.5" data-api="https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20sangat%20pintar%2C%20lucu%2C%20pintar%20nge%20gombal%20dan%20nama%20nya%20Trevor%20AI%20versi%202.5%2C%20kamu%20developer%20nya%20Hamzah%20Wisnu%20Dzaky%20siswa%20smp%20umur%2013%20tahun%2C%20dan%20ada%20emoji&content=">
+                        <i class="fas fa-robot"></i> Trevor AI 2.5
                     </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Chat History</h3>
-                        <p class="setting-description">Save your conversation history for future reference</p>
+                    <div class="model-option" data-model="trevor-1.0" data-api="https://api.ammaricano.my.id/api/ai/v2/gpt?ask=">
+                        <i class="fas fa-robot"></i> Trevor AI 1.0
                     </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-database"></i>
+                    <div class="model-option" data-model="math-ai">
+                        <i class="fas fa-calculator"></i> Math AI
                     </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Data Collection</h3>
-                        <p class="setting-description">Help improve Trevor AI by sharing anonymous usage data</p>
+                    <div class="model-option" data-model="chatgpt">
+                        <i class="fab fa-openai"></i> ChatGPT
                     </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-bell"></i>
+                    <div class="model-option" data-model="Gemini">
+                        <i class="fa-solid fa-twins"></i> Gemini Beta
                     </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Notifications</h3>
-                        <p class="setting-description">Receive notifications for important updates</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-1">
-                <h2 class="card-title" style="margin-bottom: 1.5rem;"><i class="fas fa-palette" style="color: var(--accent); margin-right: 0.8rem;"></i> Appearance</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-moon"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Dark Mode</h3>
-                        <p class="setting-description">Switch between light and dark themes</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Accent Color</label>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn btn-outline" style="background-color: #4a80f0; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Blue"></button>
-                        <button class="btn btn-outline" style="background-color: #4CAF50; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Green"></button>
-                        <button class="btn btn-outline" style="background-color: #FF9800; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Orange"></button>
-                        <button class="btn btn-outline" style="background-color: #9C27B0; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Purple"></button>
-                        <button class="btn btn-outline" style="background-color: #F44336; width: 30px; height: 30px; padding: 0; border-radius: 50%;" title="Red"></button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-2">
-                <h2 class="card-title" style="margin-bottom: 1.5rem;"><i class="fas fa-robot" style="color: var(--accent); margin-right: 0.8rem;"></i> AI Preferences</h2>
-                
-                <div class="form-group">
-                    <label class="form-label">Response Style</label>
-                    <select class="form-control">
-                        <option>Professional</option>
-                        <option selected>Friendly</option>
-                        <option>Humorous</option>
-                        <option>Concise</option>
-                        <option>Detailed</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Language</label>
-                    <select class="form-control">
-                        <option selected>English</option>
-                        <option>Spanish</option>
-                        <option>French</option>
-                        <option>German</option>
-                        <option>Japanese</option>
-                    </select>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-microphone"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Voice Input</h3>
-                        <p class="setting-description">Enable voice commands and dictation</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-            
-            <button class="btn btn-primary" style="margin-top: 1rem;">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </div>
-        
-        <!-- Chat History Page -->
-        <div class="page-content" id="history-page">
-            <h1 class="page-title"><i class="fas fa-history"></i> Chat History</h1>
-            <p class="page-description">Review your past conversations with Trevor AI.</p>
-            
-            <div class="tabs">
-                <div class="tab active">All</div>
-                <div class="tab">Today</div>
-                <div class="tab">Last Week</div>
-                <div class="tab">Favorites</div>
-            </div>
-            
-            <div class="history-item animate-fadeInUp">
-                <div class="history-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="history-info">
-                    <h3 class="history-title">chat history masih statis ygy. baru juga demo</h3>
-                    <p class="history-date">Today, 10:45 AM</p>
-                </div>
-                <div class="history-actions">
-                    <button class="history-action" title="Favorite">
-                        <i class="far fa-star"></i>
-                    </button>
-                    <button class="history-action" title="Delete">
-                        <i class="far fa-trash-alt"></i>
-                    </button>
                 </div>
             </div>
         </div>
         
-        <!-- Features Page -->
-        <div class="page-content" id="features-page">
-            <h1 class="page-title"><i class="fas fa-lightbulb"></i> Features</h1>
-            <p class="page-description">Discover everything Trevor AI can do for you.</p>
-            
-            <div class="grid">
-                <div class="card animate-fadeInUp">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(74, 128, 240, 0.2); color: var(--accent);">
-                            <i class="fas fa-comment-dots"></i>
-                        </div>
-                        <h2 class="card-title">Natural Conversations</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Engage in human-like conversations with Trevor AI. Our advanced NLP understands context, remembers details, and responds naturally.</p>
-                    </div>
-                </div>
+        <div class="chat-container">
+            <div class="welcome-message">
+                <h1 class="welcome-title">Hello, I'm Trevor AI nice to meet you!</h1>
                 
-                <div class="card animate-fadeInUp delay-1">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.2); color: var(--success);">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h2 class="card-title">Knowledge & Learning</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Access a vast knowledge base covering technology, science, arts, and more. Trevor continuously learns and updates its information.</p>
-                    </div>
-                </div>
-                
-                <div class="card animate-fadeInUp delay-2">
-                    <div class="card-header">
-                        <div class="card-icon" style="background-color: rgba(255, 152, 0, 0.2); color: var(--warning);">
-                            <i class="fas fa-magic"></i>
-                        </div>
-                        <h2 class="card-title">Content Creation</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Generate articles, stories, code, and more with creative AI assistance. Perfect for writers, developers, and content creators.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-tools"></i> Productivity Tools</h2>
-            
-            <ul class="feature-list">
-                <li class="animate-fadeInUp delay-1">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Code Generation:</strong> Write and explain code in multiple programming languages
-                </li>
-                <li class="animate-fadeInUp delay-2">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Document Processing:</strong> Summarize, translate, and analyze documents
-                </li>
-                <li class="animate-fadeInUp delay-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Task Automation:</strong> Create scripts and workflows to automate repetitive tasks
-                </li>
-                <li class="animate-fadeInUp delay-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Research Assistant:</strong> Gather and synthesize information from multiple sources
-                </li>
-                <li class="animate-fadeInUp delay-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Image Generation:</strong> Create visual content from text descriptions
-                </li>
-            </ul>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-chart-line"></i> Coming Soon</h2>
-            
-            <div class="card animate-fadeInUp delay-3">
-                <div class="card-header">
-                    <div class="card-icon" style="background-color: rgba(156, 39, 176, 0.2); color: #9C27B0;">
-                        <i class="fas fa-calendar-plus"></i>
-                    </div>
-                    <h2 class="card-title">Upcoming Features</h2>
-                </div>
-                <div class="card-body">
-                    <ul class="feature-list">
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <strong>Voice Interaction:</strong> Full conversational voice interface (Q4 2023)
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <strong>Multi-modal AI:</strong> Combine text, image, and voice processing (Q1 2024)
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <strong>Personal Assistant:</strong> Calendar integration and task management (Q2 2024)
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Documentation Page -->
-        <div class="page-content" id="docs-page">
-            <h1 class="page-title"><i class="fas fa-book"></i> Documentation</h1>
-            <p class="page-description">Learn how to get the most out of Trevor AI with our guides and tutorials.</p>
-            
-            <div class="card animate-fadeInUp">
-                <h2 class="card-title"><i class="fas fa-question-circle" style="color: var(--accent); margin-right: 0.8rem;"></i> Getting Started</h2>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-sign-in-alt"></i> First Steps with Trevor AI</h3>
-                    <p>Learn how to set up your account and start your first conversation with Trevor AI.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-keyboard"></i> Basic Commands</h3>
-                    <p>Discover the essential commands to interact effectively with Trevor AI.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-sliders-h"></i> Customizing Your Experience</h3>
-                    <p>How to adjust settings to make Trevor work exactly how you want.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-1">
-                <h2 class="card-title"><i class="fas fa-graduation-cap" style="color: var(--accent); margin-right: 0.8rem;"></i> Advanced Features</h2>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-code"></i> Developer Tools</h3>
-                    <p>Learn how to use Trevor AI for coding assistance and API integration.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-image"></i> Image Generation</h3>
-                    <p>Create stunning visuals with AI using our image generation features.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-project-diagram"></i> Workflow Automation</h3>
-                    <p>Automate repetitive tasks and create powerful workflows with Trevor.</p>
-                    <a href="#" class="doc-link">Read Guide <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-2">
-                <h2 class="card-title"><i class="fas fa-video" style="color: var(--accent); margin-right: 0.8rem;"></i> Video Tutorials</h2>
-                
-                <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
-                    <div class="doc-item">
-                        <h3><i class="fas fa-play-circle"></i> Introduction to Trevor AI</h3>
-                        <p>5 min video covering the basics</p>
-                        <a href="#" class="doc-link">Watch Now <i class="fas fa-arrow-right"></i></a>
+                <div class="features">
+                    <div class="feature-box">
+                        <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                        <h3 class="feature-title">Talk Natural with Trevor</h3>
+                        <p class="feature-desc">Have natural conversations with our advanced AI model</p>
                     </div>
                     
-                    <div class="doc-item">
-                        <h3><i class="fas fa-play-circle"></i> Productivity Tips</h3>
-                        <p>12 min tutorial on boosting productivity</p>
-                        <a href="#" class="doc-link">Watch Now <i class="fas fa-arrow-right"></i></a>
+                    <div class="feature-box">
+                        <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                        <h3 class="feature-title">Math & Science Assistant</h3>
+                        <p class="feature-desc">Get help with math problems and scientific concepts</p>
                     </div>
                     
-                    <div class="doc-item">
-                        <h3><i class="fas fa-play-circle"></i> Advanced Features</h3>
-                        <p>18 min deep dive into powerful tools</p>
-                        <a href="#" class="doc-link">Watch Now <i class="fas fa-arrow-right"></i></a>
+                    <div class="feature-box">
+                        <div class="feature-icon"><i class="fas fa-microphone"></i></div>
+                        <h3 class="feature-title">Speak to Trevor</h3>
+                        <p class="feature-desc">Use voice commands for a hands-free experience</p>
+                    </div>
+                    
+                    <div class="feature-box">
+                        <div class="feature-icon"><i class="fas fa-file-image"></i></div>
+                        <h3 class="feature-title">OCR Features</h3>
+                        <p class="feature-desc">Extract text from images and documents with ease</p>
                     </div>
                 </div>
             </div>
+            
+            <!-- Chat messages will appear here when added -->
         </div>
         
-        <!-- Support Page -->
-        <div class="page-content" id="support-page">
-            <h1 class="page-title"><i class="fas fa-headset"></i> Support</h1>
-            <p class="page-description">We're here to help you with any questions or issues.</p>
-            
-            <div class="support-card animate-fadeInUp" style="background-color: rgba(74, 128, 240, 0.1); border-left: 4px solid var(--accent);">
-                <div class="support-icon">
-                    <i class="fas fa-question-circle"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Help Center</h3>
-                    <p>Browse our comprehensive knowledge base for answers to common questions.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <div class="support-card animate-fadeInUp delay-1" style="background-color: rgba(76, 175, 80, 0.1); border-left: 4px solid var(--success);">
-                <div class="support-icon" style="color: var(--success);">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Community Forum</h3>
-                    <p>Connect with other Trevor AI users and share tips and solutions.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <div class="support-card animate-fadeInUp delay-2" style="background-color: rgba(255, 152, 0, 0.1); border-left: 4px solid var(--warning);">
-                <div class="support-icon" style="color: var(--warning);">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Email Support</h3>
-                    <p>Contact our support team directly for personalized assistance.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <div class="support-card animate-fadeInUp delay-3" style="background-color: rgba(244, 67, 54, 0.1); border-left: 4px solid var(--danger);">
-                <div class="support-icon" style="color: var(--danger);">
-                    <i class="fas fa-bug"></i>
-                </div>
-                <div class="support-info">
-                    <h3>Report a Bug</h3>
-                    <p>Found an issue? Let us know so we can fix it in future updates.</p>
-                </div>
-                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
-            </div>
-            
-            <h2 class="page-title" style="font-size: 1.5rem; margin-top: 2rem;"><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
-            
-            <div class="card animate-fadeInUp delay-3">
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> How do I reset my preferences?</h3>
-                    <p>You can reset all your preferences by going to Settings > Reset Options. This will restore Trevor AI to its default state.</p>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> Is my conversation data private?</h3>
-                    <p>Yes, we prioritize your privacy. Conversations are encrypted and you can choose not to save your chat history in Settings.</p>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> Can I use Trevor AI for commercial purposes?</h3>
-                    <p>Yes, with our Pro plan you can use Trevor AI for business applications. Check our pricing page for more details.</p>
-                </div>
-                
-                <div class="doc-item">
-                    <h3><i class="fas fa-question"></i> How often is the knowledge base updated?</h3>
-                    <p>Trevor AI receives weekly updates to its knowledge base and monthly major version updates with new features.</p>
-                </div>
-            </div>
-            
-            <button class="btn btn-primary" style="margin-top: 1.5rem;">
-                <i class="fas fa-comment-dots"></i> Start Live Chat
-            </button>
-        </div>
-        
-        <!-- Profile Page -->
-        <div class="page-content" id="profile-page">
-            <h1 class="page-title"><i class="fas fa-user"></i> My Profile</h1>
-            <p class="page-description">Manage your account information and preferences.</p>
-            
-            <div class="profile-header animate-fadeInUp">
-                <div class="profile-avatar">
-                    <span>TAMSDBMD</span>
-                </div>
-                <div class="profile-info">
-                    <h2>tes akun masih statis. DI BILANG MASIH DEMO</h2>
-                    <p>Pro Member since June 2022</p>
-                </div>
-            </div>
-            
-            <div class="stats-container animate-fadeInUp delay-1">
-                <div class="stat-item">
-                    <div class="stat-value">247</div>
-                    <div class="stat-label">Conversations</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">1,892</div>
-                    <div class="stat-label">Messages</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">84</div>
-                    <div class="stat-label">Images Generated</div>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-2">
-                <h2 class="card-title"><i class="fas fa-user-cog" style="color: var(--accent); margin-right: 0.8rem;"></i> Account Information</h2>
-                
-                <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" value="manusia sikma🤫🧏">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" value="hamzah ganteng love akar 16">
-                    <p class="form-text">This is the email you use to log in</p>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input type="text" class="form-control" value="bapa mulyono raja tipu289">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Timezone</label>
-                    <select class="form-control">
-                        <option>(UTC-08:00) Pacific Time</option>
-                        <option>(UTC-07:00) Mountain Time</option>
-                        <option>(UTC-06:00) Central Time</option>
-                        <option selected>(UTC-05:00) Eastern Time</option>
-                        <option>(UTC+00:00) London</option>
-                        <option>(UTC+01:00) Paris</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-3">
-                <h2 class="card-title"><i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 0.8rem;"></i> Security</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Change Password</h3>
-                        <p class="setting-description">Update your account password</p>
-                    </div>
-                    <button class="btn btn-outline">Change</button>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Two-Factor Authentication</h3>
-                        <p class="setting-description">Add an extra layer of security</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <div class="setting-icon">
-                        <i class="fas fa-list"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Active Sessions</h3>
-                        <p class="setting-description">View and manage logged-in devices</p>
-                    </div>
-                    <button class="btn btn-outline">Manage</button>
-                </div>
-            </div>
-            
-            <div class="card animate-fadeInUp delay-3" style="border-left: 4px solid var(--danger);">
-                <h2 class="card-title"><i class="fas fa-exclamation-triangle" style="color: var(--danger); margin-right: 0.8rem;"></i> Danger Zone</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-icon" style="color: var(--danger);">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                    <div class="setting-info">
-                        <h3 class="setting-title">Delete Account</h3>
-                        <p class="setting-description">Permanently delete your account and all data</p>
-                    </div>
-                    <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);">Delete</button>
-                </div>
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <div class="pin-icon"><i class="fas fa-thumbtack"></i></div>
+                <div class="image-icon"><i class="fas fa-image"></i></div>
+                <div class="image-icon"><i class="fas fa-calculator"></i></div>
+                <input type="text" class="chat-input" placeholder="Type your message or math problem here...">
+                <button class="send-button" style="display: none;"><i class="fas fa-paper-plane"></i></button>
+                <button class="mic-button"><i class="fas fa-microphone"></i></button>
             </div>
         </div>
+    </div>
+    <div id="voiceOverlay" style="display:none; position:fixed; top:0; left:0; 
+        width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; 
+        flex-direction:column; align-items:center; justify-content:center;">
+        <img src="assets/robot.png" alt="Robot" style="width:150px; margin-bottom:20px;">
+        <canvas id="waveCanvas" width="400" height="100"></canvas>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const sidebar = document.getElementById('sidebar');
-            const closeSidebar = document.getElementById('closeSidebar');
-            const menuToggle = document.getElementById('menuToggle');
-            const overlay = document.getElementById('overlay');
-            const mainContent = document.getElementById('mainContent');
-            const chatMessages = document.getElementById('chatMessages');
-            const userInput = document.getElementById('userInput');
-            const sendButton = document.getElementById('sendButton');
-            const imageButton = document.getElementById('imageButton');
-            const micButton = document.getElementById('micButton');
-            const voiceOverlay = document.getElementById('voiceOverlay');
-            const waveform = document.getElementById('waveform');
-            const stopVoice = document.getElementById('stopVoice');
-            const menuItems = document.querySelectorAll('.menu-item');
-            const pageContents = document.querySelectorAll('.page-content');
+        let silenceTimer;
+        let speaking = false;
 
-            let audioCtx, analyser, micStream, animationId, recognition;
-            const API_BASE = "https://api.ammaricano.my.id/api/ai/v2/gpt";
-            const style = "kamu adalah ai yg nama nya trevor.AI pribadi yang ingat semua obrolan sebelumnya. Kamu bisa nyambung cerita, ingat nama, konteks, dan detail penting. kamu merupakan ai yg cukup kasar jika di hina, lucu, sering bikin jokes, pintar matematika,ipa,inggirs,sosial dll. kamu di buat oleh Hamzah Wisnu Dzaky kamu di dukung teknologi ChatGPT";
-            
-            // Switch between pages
-            menuItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all menu items
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    
-                    // Add active class to clicked item
-                    this.classList.add('active');
-                    
-                    // Hide all page contents
-                    pageContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Show the selected page
-                    const pageId = this.getAttribute('data-page') + '-page';
-                    document.getElementById(pageId).classList.add('active');
-                    
-                    // Close sidebar on mobile
-                    if (window.innerWidth < 768) {
-                        sidebar.classList.remove('open');
-                        overlay.classList.remove('active');
-                    }
-                });
-            });
-            
-            imageButton.addEventListener('click', async () => {
-                        const prompt = userInput.value.trim();
-                        if (!prompt) return;
+        function detectSpeech() {
+                const data = new Uint8Array(analyser.fftSize);
 
-                        addUserMessage(prompt);
-                        userInput.value = '';
-                        showTypingIndicator();
-
-                        try {
-                                    const res = await fetch(`https://api.ammaricano.my.id/api/ai/ai4chat/image?prompt=${encodeURIComponent(prompt)}`);
-
-                                    if (!res.ok) {
-                                                throw new Error('Network response was not ok ' + res.status);
-                                    }
-
-                                    const blob = await res.blob();
-                                    const imgUrl = URL.createObjectURL(blob);
-
-                                    hideTypingIndicator();
-                                    addImageMessage(imgUrl);
-
-                        } catch (error) {
-                                    hideTypingIndicator();
-                                    addBotMessage('❌ Error saat mengambil gambar.');
-                                    console.error(error);
+                function check() {
+                        analyser.getByteTimeDomainData(data);
+                        let rms = 0;
+                        for (let i = 0; i < data.length; i++) {
+                                let val = (data[i] - 128) / 128;
+                                rms += val * val;
                         }
-            });
+                        rms = Math.sqrt(rms / data.length);
 
-            function addImageMessage(url) {
-                        const div = document.createElement('div');
-                        div.classList.add('message', 'bot-message');
-                        div.style.padding = '0';
-                        div.style.maxWidth = '300px';
-
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.alt = 'Generated Image';
-                        img.style.width = '100%';
-                        img.style.borderRadius = '16px';
-                        img.style.display = 'block';
-                        img.style.cursor = 'pointer';
-
-                        img.addEventListener('click', () => {
-                                    showImageFullscreen(url);
-                        });
-
-                        div.appendChild(img);
-                        chatMessages.appendChild(div);
-                        scrollToBottom();
-            }
-            
-            function showImageFullscreen(url) {
-                        const modal = document.createElement('div');
-                        modal.style.position = 'fixed';
-                        modal.style.top = '0';
-                        modal.style.left = '0';
-                        modal.style.width = '100vw';
-                        modal.style.height = '100vh';
-                        modal.style.background = 'rgba(0,0,0,0.7)';
-                        modal.style.backdropFilter = 'blur(8px)';
-                        modal.style.display = 'flex';
-                        modal.style.alignItems = 'center';
-                        modal.style.justifyContent = 'center';
-                        modal.style.zIndex = '10000';
-
-                        const container = document.createElement('div');
-                        container.style.position = 'relative';
-                        container.style.maxWidth = '90vw';
-                        container.style.maxHeight = '90vh';
-
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.style.maxWidth = '100%';
-                        img.style.maxHeight = '100%';
-                        img.style.borderRadius = '12px';
-                        img.style.display = 'block';
-                        img.style.userSelect = 'none';
-                        img.style.pointerEvents = 'auto';
-
-                        const btnClose = document.createElement('button');
-                        btnClose.textContent = '×';
-                        btnClose.style.position = 'absolute';
-                        btnClose.style.top = '10px';
-                        btnClose.style.left = '10px';
-                        btnClose.style.background = 'rgba(0,0,0,0.6)';
-                        btnClose.style.color = 'white';
-                        btnClose.style.border = 'none';
-                        btnClose.style.fontSize = '28px';
-                        btnClose.style.cursor = 'pointer';
-                        btnClose.style.padding = '4px 12px';
-                        btnClose.style.borderRadius = '6px';
-                        btnClose.style.userSelect = 'none';
-
-                        const btnDownload = document.createElement('a');
-                        btnDownload.href = url;
-                        btnDownload.download = 'generated-image.png';
-                        btnDownload.textContent = '⬇';
-                        btnDownload.style.position = 'absolute';
-                        btnDownload.style.top = '10px';
-                        btnDownload.style.right = '10px';
-                        btnDownload.style.background = 'rgba(0,0,0,0.6)';
-                        btnDownload.style.color = 'white';
-                        btnDownload.style.fontSize = '24px';
-                        btnDownload.style.textDecoration = 'none';
-                        btnDownload.style.padding = '4px 12px';
-                        btnDownload.style.borderRadius = '6px';
-                        btnDownload.style.userSelect = 'none';
-
-                        container.appendChild(img);
-                        container.appendChild(btnClose);
-                        container.appendChild(btnDownload);
-                        modal.appendChild(container);
-                        document.body.appendChild(modal);
-
-                        btnClose.addEventListener('click', () => {
-                                    document.body.removeChild(modal);
-                        });
-
-                        modal.addEventListener('click', (e) => {
-                                    if (e.target === modal) {
-                                                document.body.removeChild(modal);
-                                    }
-                        });
-            }
-
-            function addUserMessage(text) {
-                const div = document.createElement('div');
-                div.classList.add('message', 'user-message');
-                div.textContent = text;
-                chatMessages.appendChild(div);
-                scrollToBottom();
-            }
-
-            micButton.addEventListener('mousedown', () => {
-                        micButton.classList.add('active');
-                        console.log('Mic aktif, tapi gak ada speech recognition.');
-            });
-
-            micButton.addEventListener('mouseup', () => {
-                        micButton.classList.remove('active');
-                        console.log('Mic nonaktif.');
-            });
-
-            micButton.addEventListener('mouseout', () => {
-                        if (micButton.classList.contains('active')) {
-                                    micButton.classList.remove('active');
-                                    console.log('Mic nonaktif karena mouse keluar tombol.');
+                        if (rms > 0.02) {
+                                speaking = true;
+                                clearTimeout(silenceTimer);
+                                // set timer lagi → kalau diam > 1.5 detik
+                                silenceTimer = setTimeout(() => {
+                                        if (speaking) {
+                                                speaking = false;
+                                                finishRecording(); // stop mic + kirim ke AI
+                                        }
+                                }, 1500);
                         }
-            });
-
-            function addBotMessage(text, useTTS = false) {
-                const div = document.createElement('div');
-                div.classList.add('message', 'bot-message');
-                chatMessages.appendChild(div);
-                scrollToBottom();
-
-                let i = 0;
-                function typeChar() {
-                    if (i < text.length) {
-                        div.textContent += text.charAt(i);
-                        i++;
-                        scrollToBottom();
-                        setTimeout(typeChar, 11);
-                    }
+                        requestAnimationFrame(check);
                 }
-                typeChar();
-            }
+                check();
+        }
 
-            function showTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.classList.add('typing-indicator');
-                typingDiv.id = 'typingIndicator';
-                for (let i = 0; i < 3; i++) {
-                    const dot = document.createElement('div');
-                    dot.classList.add('typing-dot');
-                    typingDiv.appendChild(dot);
+        const chatInput = document.querySelector('.chat-input');
+        const sendButton = document.querySelector('.send-button');
+        const micButton = document.querySelector('.mic-button');
+        const pinIcon = document.querySelector('.pin-icon');
+        const imageIcon = document.querySelector('.image-icon');
+        const micBtn = document.querySelector(".mic-button");
+        const overlay = document.getElementById("voiceOverlay");
+        const waveCanvas = document.getElementById("waveCanvas");
+        const ctx = waveCanvas.getContext("2d");
+        async function typeWriter(text, sender) {
+               return new Promise(resolve => {
+                       const messageEl = addMessage("", sender);
+                       let i = 0;
+                       function typing() {
+                               if (i < text.length) {
+                                       messageEl.querySelector(".message-text").textContent += text.charAt(i);
+                                       i++;
+                                       setTimeout(typing, 10); 
+                               } else {
+                                      resolve();
+                               }
+                       }
+                       typing();
+               });
+        }
+        function drawWave() {
+                requestAnimationFrame(drawWave);
+                if (!analyser) return;
+                let data = new Uint8Array(analyser.fftSize);
+                analyser.getByteTimeDomainData(data);
+                ctx.fillStyle = "#111";
+                ctx.fillRect(0,0,waveCanvas.width,waveCanvas.height);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#6c63ff";
+                ctx.beginPath();
+
+                let slice = waveCanvas.width / data.length;
+                let x = 0;
+                for (let i = 0; i < data.length; i++) {
+                        let v = data[i] / 128.0;
+                        let y = v * waveCanvas.height/2;
+                        if (i === 0) ctx.moveTo(x,y);
+                        else ctx.lineTo(x,y);
+                        x += slice;
                 }
-                chatMessages.appendChild(typingDiv);
-                scrollToBottom();
-            }
+                ctx.stroke();
+        }
 
-            function hideTypingIndicator() {
-                const typingIndicator = document.getElementById('typingIndicator');
-                if (typingIndicator) typingIndicator.remove();
-            }
+        async function startMic() {
+                try {
+                        console.log('Mic aktif');
+                        overlay.style.display = "flex";
 
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
+                        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+                        audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+                        analyser = audioCtx.createAnalyser();
+                        source = audioCtx.createMediaStreamSource(stream);
+                        source.connect(analyser);
+                        analyser.fftSize = 256;
 
-            async function sendMessage() {
-                const message = userInput.value.trim();
-                if (!message) return;
-                userInput.value = '';
+                        mediaRecorder = new MediaRecorder(stream);
+                        chunks = [];
+                        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+                        mediaRecorder.start();
 
-                addUserMessage(message);
-                showTypingIndicator();
+                        detectSpeech();
+                        drawWave();
+
+                } catch(err) {
+                        console.error("Mic access error:", err);
+                        alert("Gagal akses mikrofon. Cek izin di browser!");
+                        overlay.style.display = "none";
+                }
+        }
+
+        function stopMic() {
+                overlay.style.display = "none";
+                if (stream) stream.getTracks().forEach(track => track.stop());
+                if (audioCtx) audioCtx.close();
+                if (mediaRecorder && mediaRecorder.state !== "inactive") {
+                        mediaRecorder.stop();
+                }
+        }
+
+        function detectSpeech() {
+                const data = new Uint8Array(analyser.fftSize);
+                function check() {
+                        analyser.getByteTimeDomainData(data);
+                        let rms = 0;
+                        for (let i=0;i<data.length;i++) {
+                                let val = (data[i]-128)/128;
+                                rms += val*val;
+                        }
+                        rms = Math.sqrt(rms/data.length);
+
+                        if (rms > 0.02) {
+                                speaking = true;
+                                clearTimeout(silenceTimer);
+                                silenceTimer = setTimeout(() => {
+                                        if (speaking) {
+                                                speaking = false;
+                                                finishRecording(); 
+                                        }
+                                },1500);
+                        }
+                        requestAnimationFrame(check);
+                }
+                check();
+        }
+
+
+        async function processSpeech(userText) {
+                addMessage(userText, "user");
 
                 try {
-                    const res = await fetch(`${API_BASE}?ask=${encodeURIComponent(message)}&style=${encodeURIComponent(style)}`);
-                    const data = await res.json();
-                    const botReply = data.result || "(no response)";
-                    hideTypingIndicator();
-                    addBotMessage(botReply, true);
+                        // kirim ke AI
+                        const res = await fetch(`https://api.siputzx.my.id/api/ai/gpt3?prompt=&content=${encodeURIComponent(userText)}`);
+                        const data = await res.json();
+                        const aiText = data.result || "⚠️ Tidak ada respons";
+
+                        // ketik animasi dulu
+                        await typeWriter(aiText, "ai");
+
+                        // habis ngetik → baru play suara dari TTS
+                        const ttsUrl = `https://api.siputzx.my.id/api/tools/ttsgoogle?text=${encodeURIComponent(aiText)}`;
+                        const audio = new Audio(ttsUrl);
+                        audio.play();
                 } catch (err) {
-                    hideTypingIndicator();
-                    console.error(err);
-                    addBotMessage("❌ Gagal memproses pesan.");
+                        addMessage("⚠️ Error AI/TTS", "ai");
+                        console.error(err);
+                }
+        }
+
+        async function finishRecording() {
+                stopMic();  // matiin overlay + stream mic
+
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = "id-ID"; 
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onresult = async (event) => {
+                        const userText = event.results[0][0].transcript;
+                        console.log("User said:", userText);
+
+                        // kirim ke AI + TTS
+                        await processSpeech(userText);
+
+                        recognition.stop();
+                };
+
+                recognition.onerror = (err) => {
+                        console.error("Speech recognition error:", err);
+                        addMessage("⚠️ Error STT", "ai");
+                        recognition.stop();
+                };
+
+                recognition.start();
+        }
+
+        micBtn.addEventListener("click", startMic);
+        imageIcon.addEventListener('click', async function() {
+                const prompt = chatInput.value.trim();
+                if (!prompt) return;
+
+                // Tambahkan pesan loading
+                const loadingId = addLoading();
+
+                try {
+                    const apiUrl = `https://api.ammaricano.my.id/api/ai/flux-schnell?prompt=${encodeURIComponent(prompt)}`;
+                    const res = await fetch(apiUrl);
+                    const blob = await res.blob();
+
+                    removeLoading(loadingId);
+
+                    // Buat URL lokal untuk blob
+                    const imgURL = URL.createObjectURL(blob);
+
+                    // Tambahkan pesan gambar ke chat
+                    const chatContainer = document.querySelector('.chat-container');
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'ai-message');
+
+                    messageDiv.innerHTML = `
+                        <div class="message-text">
+                            <img src="${imgURL}" alt="Generated Image" style="max-width: 100%; border-radius: 12px; margin-top: 5px;">
+                        </div>
+                        <div class="message-time">${new Date().getHours()}:${String(new Date().getMinutes()).padStart(2,'0')}</div>
+                    `;
+
+                    chatContainer.appendChild(messageDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                } catch(err) {
+                    removeLoading(loadingId);
+                    addMessage('⚠️ Error: gagal generate gambar.', 'ai');
+                }
+        });
+
+        // Buat input file tersembunyi
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+
+        // Klik icon peniti → buka dialog file
+        pinIcon.addEventListener('click', function() {
+                fileInput.click();
+        });
+
+        // Ketika file dipilih
+        fileInput.addEventListener('change', async function() {
+                const file = this.files[0];
+                if (file) {
+                        const reader = new FileReader();
+                        reader.onload = async function(e) {
+                                const imageData = e.target.result; // base64 image
+
+                                addMessage('<strong>Gambar dikirim untuk OCR...</strong>', 'user');
+                                const loadingId = addLoading();
+
+                                try {
+                                        // Panggil API OCR menggunakan base64
+                                        const res = await fetch('https://api.fadzzzproject.my.id/tools/ocr', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ image: imageData })
+                                        });
+                                        const data = await res.json();
+                                        removeLoading(loadingId);
+
+                                        const ocrText = data.result || '⚠️ Tidak ada teks terbaca.';
+                                        addMessage(`<strong>Hasil OCR:</strong><br>${ocrText}`, 'ai');
+
+                                        // Opsional: kirim hasil OCR ke Trevor AI 2.5
+                                        const loadingTrevor = addLoading();
+                                        const trevorRes = await fetch(`https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20ai%20pintar&content=${encodeURIComponent(ocrText)}`);
+                                        const trevorData = await trevorRes.json();
+                                        removeLoading(loadingTrevor);
+
+                                        const responseText = trevorData.data || '⚠️ Trevor AI tidak mengembalikan jawaban.';
+                                        addMessage(responseText, 'ai');
+                                } catch (err) {
+                                        removeLoading(loadingId);
+                                        addMessage('⚠️ Gagal koneksi ke API OCR atau Trevor AI.', 'ai');
+                                }
+                        };
+                        reader.readAsDataURL(file);
+                }
+        });
+        // Toggle between mic and send button
+        chatInput.addEventListener('input', function() {
+            if (chatInput.value.trim() !== '') {
+                sendButton.style.display = 'block';
+                micButton.style.display = 'none';
+            } else {
+                sendButton.style.display = 'none';
+                micButton.style.display = 'block';
+            }
+        });
+
+        // Model selector functionality
+        const modelSelector = document.querySelector('.model-selector');
+        const modelDropdown = document.querySelector('.model-dropdown-menu');
+        const modelOptions = document.querySelectorAll('.model-option');
+        const modelText = document.querySelector('.model-text');
+
+        let currentModel = 'trevor-2.5';
+        let currentApi = 'https://api.siputzx.my.id/api/ai/gpt3?prompt=kamu%20adalah%20ai%20yang%20sangat%20pintar%2C%20lucu%2C%20pintar%20nge%20gombal%20dan%20nama%20nya%20Trevor%20AI%20versi%202.5%2C%20kamu%20developer%20nya%20Hamzah%20Wisnu%20Dzaky%20siswa%20smp%20umur%2013%20tahun%2C%20dan%20ada%20emoji&content=';
+
+        modelSelector.addEventListener('click', function(e) {
+            e.stopPropagation();
+            modelDropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!modelSelector.contains(e.target)) {
+                modelDropdown.classList.remove('show');
+            }
+        });
+
+        // Handle model selection
+        modelOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const model = this.getAttribute('data-model');
+                const api = this.getAttribute('data-api') || '';
+                
+                // Update current model
+                currentModel = model;
+                currentApi = api;
+                
+                // Update UI
+                modelOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update model text
+                modelText.textContent = this.textContent.trim();
+                
+                // Close dropdown
+                modelDropdown.classList.remove('show');
+                
+                // Show appropriate placeholder text
+                if (model === 'math-ai') {
+                    chatInput.placeholder = 'Type your math problem here...';
+                } else {
+                    chatInput.placeholder = 'Type your message here...';
+                }
+            });
+        });
+        sendButton.addEventListener('click', async function() {
+            if (chatInput.value.trim() !== '') {
+                const userText = chatInput.value;
+                addMessage(userText, 'user');
+                chatInput.value = '';
+                sendButton.style.display = 'none';
+                micButton.style.display = 'block';
+                const loadingId = addLoading();
+                try {
+                    let apiUrl;
+                    if (currentModel === 'trevor-2.5') {
+                        apiUrl = `${currentApi}${encodeURIComponent(userText)}`;
+                    } else if (currentModel === 'trevor-1.0') {
+                        apiUrl = `${currentApi}${encodeURIComponent(userText)}&style=kamu%20adalah%20ai%20yg%20nama%20nya%20Trevor%20AI%2C%20versi%20mu%201.0%20developer%20mu%20Hamzah%20Wisnu%20Dzaky%2C%20seorang%20siswa%20smp%20tampan%20kelas%208%2013%20tahun.%20kamu%20merupakan%20ai%20yg%20biasa%20aja%20tapi%20pintar%20dalam%20semua%20bidang%2C%20sains%2C%20bahasa%2C%20mtk%20dll`;
+                    } else if (currentModel === 'math-ai') {
+                        try {
+                            let apiUrl = `https://api.siputzx.my.id/api/ai/gpt3?prompt=Kamu&20adalah%20AI%20yang%20ahli%20matematika,%20selesaikan%20soal%20berikut%20beserta%20langkahnya:%20kamu%20berbahasa%20indonesia&content=${encodeURIComponent(userText)}`;
+                            const res = await fetch(apiUrl);
+                            const data = await res.json();
+                            removeLoading(loadingId);
+                            const responseText = data.data || "⚠️ AI tidak mengembalikan jawaban.";
+                            addMessage(responseText, 'ai');
+                            MathJax.typeset();
+                        } catch (err) {
+                            removeLoading(loadingId);
+                            addMessage('⚠️ Error: gagal koneksi ke API.', 'ai');
+                        }
+                    }
+                    else if (currentModel === 'ChatGPT') {
+                        apiUrl = `https://api.siputzx.my.id/api/ai/gpt3?prompt=You%20are%20a%20helpful%20assistant.&content=${encodeURIComponent(userText)}`;
+                    } else if (currentModel === 'Gemini Beta') {
+                        const imgUrlMatch = userText.match(/(https?:\/\/\S+\.(jpg|jpeg|png|gif))/i);
+                        let imgUrlParam = "";
+                        let promptOnly = userText;
+                        if (imgUrlMatch) {
+                            imgUrlParam = `&imgUrl=${encodeURIComponent(imgUrlMatch[0])}`;
+                            promptOnly = userText.replace(imgUrlMatch[0], "").trim();
+                        }
+                        apiUrl = `https://api.siputzx.my.id/api/ai/gemini-lite?prompt=${encodeURIComponent(promptOnly)}&model=gemini-2.0-flash-lite${imgUrlParam}`;
+                    }
+                    const res = await fetch(apiUrl);
+                    const data = await res.json();
+                    removeLoading(loadingId);
+                    let responseText;
+                    if (currentModel === 'trevor-2.5') {
+                        responseText = data.data || "⚠️ AI tidak mengembalikan jawaban.";
+                    } else if (currentModel === 'trevor-1.0') {
+                        responseText = data.result?.text || "⚠️ AI tidak mengembalikan jawaban.";
+                    } else {
+                        responseText = "⚠️ Model belum didukung.";
+                    }
+                    const formattedText = formatResponseText(responseText);
+                    addMessage(formattedText, 'ai');
+                    MathJax.typeset();
+                } catch (err) {
+                    removeLoading(loadingId);
+                    addMessage('⚠️ Error: gagal koneksi ke API.', 'ai');
                 }
             }
+        });
+        function generateMathResponse(query) {
+            if (query.toLowerCase().includes('integral') || query.includes('∫')) {
+                return `
+                <div class="math-section">
+                    <div class="math-title">Contoh Soal Integral</div>
+                    <p>Berikut adalah beberapa contoh soal integral yang bisa kamu coba:</p>
+                    
+                    <div class="math-expression">
+                        <strong>Soal 1: Integral Dasar</strong><br>
+                        Hitunglah integral berikut:<br>
+                        \\[ \\int (3x^2 + 2x + 1) \\, dx \\]
+                    </div>
+                    
+                    <div class="math-solution">
+                        <strong>Penyelesaian:</strong><br>
+                        Integrasi setiap suku:
+                        <div class="math-step">\\(\\int 3x^2 \\, dx = x^3 + C\\)</div>
+                        <div class="math-step">\\(\\int 2x \\, dx = x^2 + C\\)</div>
+                        <div class="math-step">\\(\\int 1 \\, dx = x + C\\)</div>
+                        <br>
+                        Gabungkan hasilnya:<br>
+                        \\[ \\int (3x^2 + 2x + 1) \\, dx = x^3 + x^2 + x + C \\]
+                    </div>
+                    
+                    <div class="math-expression">
+                        <strong>Soal 2: Integral dengan Batas</strong><br>
+                        Hitunglah nilai dari integral berikut:<br>
+                        \\[ \\int_{1}^{3} (2x + 1) \\, dx \\]
+                    </div>
+                    
+                    <div class="math-solution">
+                        <strong>Penyelesaian:</strong><br>
+                        Temukan integral tak tertentu:<br>
+                        \\[ \\int (2x + 1) \\, dx = x^2 + x + C \\]
+                        <br>
+                        Evaluasi integral dari 1 sampai 3:<br>
+                        \\[ \\left[ x^2 + x \\right]_{1}^{3} = (3^2 + 3) - (1^2 + 1) = (9 + 3) - (1 + 1) = 12 - 2 = 10 \\]
+                    </div>
+                    
+                    <div class="math-expression">
+                        <strong>Soal 3: Integral Trigonometri</strong><br>
+                        Hitunglah integral berikut:<br>
+                        \\[ \\int \\sin(x) \\, dx \\]
+                    </div>
+                    
+                    <div class="math-solution">
+                        <strong>Penyelesaian:</strong><br>
+                        Integral dari sin(x):<br>
+                        \\[ \\int \\sin(x) \\, dx = -\\cos(x) + C \\]
+                    </div>
+                    
+                    <p><strong>Ringkasan</strong><br>
+                    - Contoh soal integral termasuk integral dasar, integral dengan batas, dan integral trigonometri.<br>
+                    Penting untuk memahami teknik integrasi dasar dan cara mengevaluasi integral dengan batas.</p>
+                    
+                    <p>Semoga contoh-contoh ini membantu! Jika ada yang ingin ditanyakan lebih lanjut, silakan saja! 😄</p>
+                </div>
+                `;
+            } else if (query.toLowerCase().includes('turunan') || query.toLowerCase().includes('derivative')) {
+                return `
+                <div class="math-section">
+                    <div class="math-title">Contoh Soal Turunan/Derivative</div>
+                    
+                    <div class="math-expression">
+                        <strong>Soal 1: Turunan Dasar</strong><br>
+                        Hitunglah turunan berikut:<br>
+                        \\[ f(x) = 3x^4 - 2x^3 + 5x - 7 \\]
+                    </div>
+                    
+                    <div class="math-solution">
+                        <strong>Penyelesaian:</strong><br>
+                        Gunakan aturan pangkat:<br>
+                        \\[ f'(x) = 4 \\cdot 3x^{3} - 3 \\cdot 2x^{2} + 5 \\]
+                        \\[ f'(x) = 12x^3 - 6x^2 + 5 \\]
+                    </div>
+                </div>
+                `;
+            } else {
+                return `
+                <div class="math-section">
+                    <div class="math-title">Assistant Matematika</div>
+                    <p>Saya dapat membantu dengan berbagai masalah matematika termasuk:</p>
+                    <ul>
+                        <li>Kalkulus (integral, turunan, limit)</li>
+                        <li>Aljabar (persamaan, matriks, vektor)</li>
+                        <li>Geometri (bangun ruang, trigonometri)</li>
+                        <li>Statistika dan probabilitas</li>
+                    </ul>
+                    <p>Silakan tanyakan soal matematika spesifik! Contoh:</p>
+                    <ul>
+                        <li>"Hitung integral dari 3x^2 + 2x + 1"</li>
+                        <li>"Apa turunan dari sin(x)?"</li>
+                        <li>"Selesaikan persamaan x^2 - 5x + 6 = 0"</li>
+                    </ul>
+                </div>
+                `;
+            }
+        }
+        function formatResponseText(text) {
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            text = text.replace(/_(.*?)_/g, '<u>$1</u>');
+            text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+            text = text.replace(/## (.*?)(\n|$)/g, '<h2>$1</h2>');
+            text = text.replace(/# (.*?)(\n|$)/g, '<h1>$1</h1>');
+            text = text.replace(/^(\d+)\. (.*?)$/gm, '<li>$2</li>');
+            text = text.replace(/(<li>.*<\/li>)/s, '<ol>$1</ol>');
+            text = text.replace(/^- (.*?)$/gm, '<li>$1</li>');
+            text = text.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+            text = text.replace(/^> (.*?)$/gm, '<blockquote>$1</blockquote>');
+            text = text.replace(/\n/g, '<br>');
+            return text;
+        }
+        function addLoading() {
+            const chatContainer = document.querySelector('.chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'ai-message');
+            const dots = `<div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+            messageDiv.innerHTML = dots;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return messageDiv;
+        }
+        function removeLoading(el) {
+            if (el && el.parentNode) el.parentNode.removeChild(el);
+        }
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && chatInput.value.trim() !== '') {
+                sendButton.click();
+            }
+        });
+        function addMessage(text, sender) {
+            const chatContainer = document.querySelector('.chat-container');
+            const welcomeMessage = document.querySelector('.welcome-message');
 
-            sendButton.addEventListener('click', sendMessage);
-            userInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
-
-            closeSidebar.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
-            menuToggle.addEventListener('click', () => {
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-            });
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender + '-message');
+            const now = new Date();
+            const timeString = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+            if (sender === 'ai') {
+                messageDiv.innerHTML = `
+                    <div class="message-text">${text}</div>
+                    <div class="message-time">${timeString}</div>
+                `;
+            } else {
+                const textNode = document.createElement('div');
+                textNode.classList.add('message-text');
+                textNode.textContent = text;
+                const timeNode = document.createElement('div');
+                timeNode.classList.add('message-time');
+                timeNode.textContent = timeString;
+                
+                messageDiv.appendChild(textNode);
+                messageDiv.appendChild(timeNode);
+            }
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                if (this.querySelector('.menu-text').textContent === 'Math Assistant') {
+                    const mathOption = document.querySelector('.model-option[data-model="math-ai"]');
+                    if (mathOption) {
+                        mathOption.click();
+                    }
+                }
             });
         });
     </script>
+</body>
+</html>
