@@ -515,6 +515,10 @@
                 <div class="menu-icon"><i class="fas fa-cog"></i></div>
                 <div class="menu-text">Settings</div>
             </li>
+            <li class="menu-item">
+                <div class="menu-icon"><i class="fas fa-flag"></i></div>
+                <div class="menu-text">Lapor</div>
+            </li>
         </ul>
         
         <div class="footer">
@@ -588,6 +592,24 @@
             
             <!-- Chat messages will appear here when added -->
         </div>
+
+        <div id="laporForm" style="display:none; padding:25px;">
+            <h2 style="margin-bottom:20px;">Kirim Laporan ke Trevor</h2>
+            <label for="username">Username:</label>
+            <input id="laporUsername" type="text" placeholder="Masukkan username..." 
+                style="width:100%; margin:10px 0 15px; background:#1e1e1e; border:1px solid #2d2d2d; 
+                color:#e0e0e0; padding:10px; border-radius:8px;">
+
+            <label for="rating">Rating:</label>
+            <div id="starRating" style="margin:10px 0;"></div>
+
+            <textarea id="laporMessage" placeholder="Tulis pesanmu..." 
+                style="width:100%; height:100px; margin-bottom:15px; background:#1e1e1e; 
+                border:1px solid #2d2d2d; color:#e0e0e0; padding:10px; border-radius:8px;"></textarea>
+
+            <button id="laporSubmit" style="padding:10px 20px; border:none; border-radius:6px; 
+                background:#6c63ff; color:white; cursor:pointer;">Kirim</button>
+        </div>
         
         <div class="chat-input-container">
             <div class="chat-input-wrapper">
@@ -607,6 +629,64 @@
         <canvas id="waveCanvas" width="400" height="100"></canvas>
     </div>
     <script>
+        let userIP = "";
+
+        // Ambil IP publik user (pakai ipify API gratis)
+        fetch("https://api.ipify.org?format=json")
+                .then(res => res.json())
+                .then(data => userIP = data.ip)
+                .catch(() => userIP = "Tidak diketahui");
+
+        // --- Submit to Backend ---
+        // --- Star Rating ---
+        const starRating = document.getElementById("starRating");
+        let currentRating = 0;
+
+        function renderStars(rating) {
+            starRating.innerHTML = "";
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement("span");
+                star.innerHTML = i <= rating ? "★" : "☆";
+                star.style.fontSize = "28px";
+                star.style.cursor = "pointer";
+                star.style.color = i <= rating ? "#FFD700" : "#888";
+                star.addEventListener("click", () => {
+                    currentRating = i;
+                    renderStars(i);
+                });
+                starRating.appendChild(star);
+            }
+        }
+        renderStars(0);
+        document.getElementById("laporSubmit").addEventListener("click", async () => {
+                const username = document.getElementById("laporUsername").value.trim();
+                const message = document.getElementById("laporMessage").value.trim();
+
+                if (!username || !currentRating || !message) {
+                        alert("Isi username, rating, dan pesan dulu!");
+                        return;
+                }
+
+                const res = await fetch("/api/lapor", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                                username,
+                                rating: currentRating,
+                                message,
+                                ip: userIP
+                        })
+                });
+
+                if (res.ok) {
+                        alert("Laporan berhasil dikirim ke Trevor!");
+                        document.getElementById("laporUsername").value = "";
+                        document.getElementById("laporMessage").value = "";
+                        renderStars(0);
+                } else {
+                        alert("Gagal kirim laporan.");
+                }
+        });
         let silenceTimer;
         let speaking = false;
 
