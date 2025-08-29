@@ -629,6 +629,32 @@
         <canvas id="waveCanvas" width="400" height="100"></canvas>
     </div>
     <script>
+        // === Toggle Lapor Form ===
+        const laporForm = document.getElementById("laporForm");
+        const chatContainer = document.querySelector(".chat-container");
+
+        menuItems.forEach(item => {
+                item.addEventListener("click", function () {
+                        menuItems.forEach(i => i.classList.remove("active"));
+                        this.classList.add("active");
+
+                        const menuText = this.querySelector(".menu-text").textContent;
+
+                        if (menuText === "Lapor") {
+                                laporForm.style.display = "block";
+                                chatContainer.style.display = "none";
+                        } else {
+                                laporForm.style.display = "none";
+                                chatContainer.style.display = "flex";
+                        }
+
+                        if (menuText === "Math Assistant") {
+                                const mathOption = document.querySelector('.model-option[data-model="math-ai"]');
+                                if (mathOption) mathOption.click();
+                        }
+                });
+        });
+
         let userIP = "";
 
         // Ambil IP publik user (pakai ipify API gratis)
@@ -1266,3 +1292,4 @@
     </script>
 </body>
 </html>
+
